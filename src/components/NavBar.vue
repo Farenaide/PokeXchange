@@ -1,9 +1,11 @@
 <template>
     <header>
         <nav>            
-            <RouterLink class="logo" to="/"><h1>PokeXchange</h1></RouterLink>
+            <RouterLink class="logo" to="/"><h1>
+                <span class="poke">Poke</span>X<span class="change">change</span>
+            </h1></RouterLink>
             <RouterLink class="menu-hover" to="/">Home</RouterLink>
-            <RouterLink class="menu-hover" to="/market">Market</RouterLink>
+            <RouterLink class="menu-hover menu-hover--variation" to="/market">Market</RouterLink>
             <RouterLink class="menu-hover" to="/about">About</RouterLink>
             <button>
                 <div class="button">Connect Wallet</div>
@@ -52,7 +54,7 @@
         left: 50%;
         background-color: transparent;
         position: absolute;
-        transition: all .5s ease-in-out;
+        transition: all .2s ease-in-out;
         transform: translateX(-50%);
     }
 
@@ -60,6 +62,10 @@
         width: 100%;
         background-color: var(--color-second);
         transform: translateX(-50%);
+    }
+
+    .menu-hover--variation:hover::after{
+        background-color: var(--color-third);
     }
 
     button{
@@ -117,5 +123,11 @@
     .gradient:hover{
         rotate: 720deg;
     }
-    
+
+    .poke{
+        color: var(--color-second);        
+    }
+    .change{
+        color: var(--color-third);
+    }
 </style>
