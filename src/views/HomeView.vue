@@ -1,19 +1,19 @@
 <template>
 	<main>
 		<WelcomeShowcase/>
-		<PopularCards/>
+		<LatestCards/>
 	</main>
 </template>
 
 <script>
 
-	import PopularCards from '../components/PopularCards.vue';
+	import LatestCards from '../components/LatestCards.vue';
 	import WelcomeShowcase from '../components/WelcomeShowcase.vue';
 
 	export default{
 		components: {
     WelcomeShowcase,
-    PopularCards
+    LatestCards
 }
 	}
 </script>
