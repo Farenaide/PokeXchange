@@ -1,5 +1,16 @@
 <template>
-  <main>
-    <h1>HOMEPAGE</h1>
-  </main>
+	<main>
+		<WelcomeShowcase/>
+	</main>
 </template>
+
+<script>
+
+	import WelcomeShowcase from '../components/WelcomeShowcase.vue';
+
+	export default{
+		components: {
+			WelcomeShowcase
+		}
+	}
+</script>

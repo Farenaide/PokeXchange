@@ -38,7 +38,7 @@
         font-weight: 500;
         font-size: 40px;
         margin: auto;
-        margin-left: 0;
+        margin-left: 20px;
     }
 
     .menu-hover{
@@ -83,7 +83,7 @@
         cursor: pointer;
         transition: scale .1s linear;
         margin: 0 auto;
-        margin-right: 8px;
+        margin-right: 28px;
     }
 
     .button{
