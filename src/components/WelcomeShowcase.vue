@@ -30,7 +30,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     article{
         box-sizing: border-box;
         display: flex;
@@ -52,8 +52,8 @@
     picture img{
         box-sizing: border-box;
         border: 2px dotted aqua;
-        position: absolute;
         border-radius: 20px;
+        position: absolute;
     }
     .card2{
         transform: matrix(-0.97, -0.26, -0.26, 0.97, 0, 0);

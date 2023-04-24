@@ -69,10 +69,10 @@
     }
 
     button{
-        --radius: 20px;
+        --radius: 15px;
         position: relative;
-        width: 190px;
-        height: 50px;
+        width: 191px;
+        height: 51px;
         min-width: 190px;
         min-height: 50px;
         display: flex;
@@ -85,15 +85,14 @@
         margin: 0 auto;
         margin-right: 28px;
     }
-
     .button{
         box-sizing: border-box;
         background-color: var(--color-first);
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 99%;
-        height: 96.5%;
+        width: 98%;
+        height: 96%;
         border-radius: var(--radius);
         position: absolute;
         z-index: 1;
@@ -102,6 +101,7 @@
         font-size: 20px;
         font-family: var(--font-Roboto);
         font-weight: 300;
+        
     }
 
     button:hover{
