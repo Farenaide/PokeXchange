@@ -2,9 +2,9 @@
     <header>
         <nav>            
             <RouterLink class="logo" to="/"><h1>PokeXchange</h1></RouterLink>
-            <RouterLink to="/">Home</RouterLink>
-            <RouterLink to="/market">Market</RouterLink>
-            <RouterLink to="/about">About</RouterLink>
+            <RouterLink class="menu-hover" to="/">Home</RouterLink>
+            <RouterLink class="menu-hover" to="/market">Market</RouterLink>
+            <RouterLink class="menu-hover" to="/about">About</RouterLink>
             <button>
                 <div class="button">Connect Wallet</div>
                 <span class="gradient"></span>
@@ -37,6 +37,29 @@
         font-size: 40px;
         margin: auto;
         margin-left: 0;
+    }
+
+    .menu-hover{
+        position: relative;
+    }
+
+    .menu-hover::after{
+        content: '';
+        display: block;
+        width: 0%;
+        height: 2px;
+        margin-top: 3px;
+        left: 50%;
+        background-color: transparent;
+        position: absolute;
+        transition: all .5s ease-in-out;
+        transform: translateX(-50%);
+    }
+
+    .menu-hover:hover::after{
+        width: 100%;
+        background-color: var(--color-second);
+        transform: translateX(-50%);
     }
 
     button{
