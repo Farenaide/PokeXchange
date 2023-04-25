@@ -13,6 +13,7 @@ dist
 dist-ssr
 coverage
 *.local
+src/services/apiTCG.js
 
 /cypress/videos/
 /cypress/screenshots/
