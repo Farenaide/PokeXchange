@@ -50,8 +50,8 @@ export default {
 
 <style>
     .wrapper{
-        width: 300px;
-        height: 400px;
+        width: 100%;
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -61,8 +61,8 @@ export default {
     }
 
     .card{
-        width: 250px;
-        height: 350px;
+        width: 100%;
+        height: 100%;
         position: relative;
         transition: .3s ease-out;
         transform-style: preserve-3d;

@@ -15,41 +15,54 @@
 
     import apiTCG from '@/services/apiTCG.js'
     import ParallaxCard from './ParallaxCard.vue';
+    import { ref, onMounted } from 'vue'
 
     export default {
     name: "LatestCards",
-    data() {
-        return {
-            LatestCards: "Loading..."
-        };
-    },
-    methods: {
-        randomNumber(min, max) {
-            return Math.random() * (max - min) + min;
-        }
-    },
-    mounted() {
-        apiTCG.get("/cards", {
-            params: {
-                pageSize: 8,
-                page: this.randomNumber(1, 1600) // número da página
+    setup() {
+        const LatestCards = ref([]);
+
+        const defaultArr = ()=>{
+            for (let index = 1; index < 11; index++) {
+                LatestCards.value.push({cardId: `${index}`, cardName: 'Default Card', cardImage: './public/loadingTCG.png'})
             }
-        }).then(response => {
-            const cardsArr = [...response.data.data];
-            const totalArr = [];
-            cardsArr.map(card => {
+        }
+        defaultArr()
+
+        const randomNumber = (min, max) => {
+            return Math.random() * (max - min) + min;
+        };
+
+        onMounted(()=>{
+            apiTCG.get('/cards', {
+                params: {
+                    pageSize: 10,
+                    page: randomNumber(1, 1612), // número da página
+                },
+            }).then((response) => {
+                const cardsArr = [...response.data.data];
+                const totalArr = [];
+
+                cardsArr.map((card) => {
                 const cardName = card.name;
                 const cardId = card.id;
                 const cardImage = card.images.small;
                 totalArr.push({ cardId, cardName, cardImage });
+                });
+
+                LatestCards.value = totalArr;
+                console.log(totalArr);
             });
-            this.LatestCards = totalArr;
-        });
+        })
+
+        return {
+            LatestCards,
+        };
     },
-    components: { 
-        ParallaxCard 
-    }
-}
+    components: {
+        ParallaxCard,
+    },
+};
 </script>
 
 <style scoped>
@@ -65,9 +78,9 @@
         margin-bottom: 40px;
     }
     ul{
-        display: flex;        
-        flex-wrap: wrap;
-        justify-content: space-between;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        column-gap: 45px;
     }
     ul li{
         margin-bottom: 50px;
@@ -75,5 +88,9 @@
     img{
         box-sizing: border-box;
         border-radius: 20px;
+    }
+
+    li img{
+        height: 350px;
     }
 </style>
