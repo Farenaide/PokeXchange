@@ -1,11 +1,36 @@
 <template>
-    <h1>Market</h1>
+    <div class="wrapper">
+        <SpreadCards class="market-itens"
+        :PageNumber="6"
+        :PageSize="20"
+        />
+    </div>
 </template>
 
 <script>
+
+    import SpreadCards from '../components/SpreadCards.vue';
+
     export default{
         components: {
-        }
+    SpreadCards
+}
     }
 
 </script>
+
+<style scoped>
+    .wrapper{
+        max-width: 1440px;
+        height: 85vh;
+        margin: 0 auto;
+        overflow-y: scroll;
+    }
+    .market-itens{
+        width: 990px;
+        height: 1589px;
+        margin: auto;
+        margin-right: 0;
+        margin-top: 70px;
+    }
+</style>

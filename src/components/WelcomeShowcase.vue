@@ -39,7 +39,7 @@
             return Math.random() * (max - min) + min;
         }
 
-        const cardDefault = ['./public/loadingTCG.png', 'Background Card']
+        const cardDefault = ['./public/loadingTCG.gif', 'Background Card']
         const card1 = ref(cardDefault)
         const card2 = ref(cardDefault)
         const card3 = ref(cardDefault)
