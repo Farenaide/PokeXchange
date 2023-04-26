@@ -16,53 +16,34 @@
                 <p>Daily Trades</p>
             </div>
         </div>
-        <picture>
-            <ParallaxCard class="card1">
-                <img :src="card1[0]" :alt="card1[1]">
-            </ParallaxCard>
-            <img class="card2" :src="card2[0]" :alt="card2[1]">
-            <img class="card3" :src="card3[0]" :alt="card3[1]">
-        </picture>
+        <SpreadCards class="threeCard"
+        :PageSize="'3'"
+        :PageNumber="randomPage"
+        :Subtypes="'mega'"
+        :ImageSize="'large'"
+        />
     </article>
 </template>
 
 <script>
-    import ParallaxCard from './ParallaxCard.vue';
-    import { onMounted, ref } from 'vue'
-    import apiTCG from '../services/apiTCG';
+    import { ref } from 'vue'
+
+import SpreadCards from './SpreadCards.vue';
 
     export default{
     name: "WelcomeShowcase",
-    components: { ParallaxCard },
+    components: { SpreadCards },
     setup(){
         const randomNumber = (min, max)=>{
             return Math.random() * (max - min) + min;
         }
-
-        const cardDefault = ['./public/loadingTCG.gif', 'Background Card']
-        const card1 = ref(cardDefault)
-        const card2 = ref(cardDefault)
-        const card3 = ref(cardDefault)
-
-        onMounted(()=>{
-            apiTCG.get("/cards", {
-            params: {
-                pageSize: 3,
-                page: randomNumber(1, 5375) // número da página
-            }
-        }).then(response => {     
-            card1.value = [response.data.data[0].images.large, response.data.data[0].name]
-            card2.value = [response.data.data[1].images.large, response.data.data[1].name]
-            card3.value = [response.data.data[2].images.large, response.data.data[2].name]
-        });
-        })
+        const randomPage = ref(randomNumber(1, 35/3))
 
         return{
-            card1,
-            card2,
-            card3,
+            randomPage
         }
     }
+
 }
 </script>
 
@@ -82,28 +63,13 @@
     }
     picture{
         position: absolute;
-        right: 438px;
-        height: 350px;
+        background-color: rgba(0, 255, 255, 0.527);
+        
+    }
+    .threeCard{
+        display: flex;
     }
 
-    .card1 :first-child, picture > .card1, .card2, .card3{
-        height: 400px;
-        border-radius: 20px;
-        box-sizing: border-box;
-        position: absolute;
-    }
-    .card2{
-        transform: rotate(16.73deg);
-        margin-top: 10px;
-        margin-left: -30px;
-        z-index: -1;
-    }
-    .card3{
-        transform: rotate(32.73deg);
-        margin-top: 20px;
-        margin-left: 50px;
-        z-index: -2;
-    }
     h2{
         font-family: var(--font-Noto-Sans);    
         font-weight: 700;
@@ -146,4 +112,39 @@
         font-size: 15px;
         font-weight: 200;
     }    
+</style>
+
+<style>
+.threeCard { 
+    position: relative;
+}
+
+.threeCard :nth-child(3) img{
+    height: 400px;
+    box-shadow: 5px 5px 20px rgb(0, 0, 0);
+    border-radius: 15px;
+}
+
+.threeCard :nth-child(2) img{
+    height: 400px;
+    position: absolute;
+    top: -30px;
+    transform: rotate(16.73deg);
+    left: 100px;
+    pointer-events: none;
+    box-shadow: 5px 5px 20px black;
+    border-radius: 15px;
+}
+
+.threeCard :nth-last-child(3) img{
+    height: 400px;
+    position: absolute;
+    top: -30px;
+    transform: rotate(32.73deg);
+    left: 200px;
+    pointer-events: none;
+    box-shadow: 5px 5px 20px black;
+    border-radius: 15px;
+}
+
 </style>
