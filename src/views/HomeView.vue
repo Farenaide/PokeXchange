@@ -12,8 +12,12 @@
 
 	export default{
 		components: {
-    WelcomeShowcase,
-    LatestCards
-}
+			WelcomeShowcase,
+			LatestCards
+		}
 	}
 </script>
+
+<style>
+
+</style>

@@ -17,8 +17,8 @@ import apiTCG from '@/services/apiTCG.js'
     export default {
     name: "SpreadCards",
     setup(props) {
+        
         const dataCards = ref([]);
-
         for (let index = 0; index < props.PageSize; index++) {
             dataCards.value.push({
                 cardId: `${index}`, 
@@ -26,23 +26,22 @@ import apiTCG from '@/services/apiTCG.js'
                 cardImage: './public/loadingTCG.gif'
             })
         }
-
+        
         onMounted(()=>{
-            apiTCG.get('/cards', { params: {
-                pageSize: props.PageSize, 
-                page: props.PageNumber,
-                q: props.Name             
-            }})
-            .then((response) => {
-                const cardsArr = [...response.data.data];
-                const totalArr = [];
-                cardsArr.map((card) => {
-                    const cardName = card.name;
-                    const cardId = card.id;
-                    const cardImage = card.images.small;
-                    totalArr.push({ cardId, cardName, cardImage });
-                });
-                dataCards.value = totalArr;
+            apiTCG.get('/cards', { 
+                params: {
+                    pageSize: props.PageSize, 
+                    page: props.PageNumber,
+                    q: `name:${props.Name} subtypes:${props.Subtypes}`,
+            }}).then((response) => {
+                response.data.data.map((card, index) => {
+                    dataCards.value.splice(index, 1, {
+                        cardId: card.id, 
+                        cardName: card.name, 
+                        cardImage: card.images[`${props.ImageSize}`]
+                    })
+                    dataCards.value.unshift(); 
+                }); 
             });
         })
 
@@ -54,9 +53,11 @@ import apiTCG from '@/services/apiTCG.js'
         ParallaxCard,
     },
     props:{
-        PageSize: {type: Number, default: 10},
-        PageNumber: {type: Number, default: 1},
-        Name: {type: String}
+        PageSize: {type: String, default: 'n/a'},
+        PageNumber: {type: String, default: 'n/a'},
+        Name: {type: String, default:'*'},        
+        Subtypes: {type: String, default:'*'},
+        ImageSize: {type: String, default:'small'} //small, large
     }
 }
 </script>
@@ -65,10 +66,14 @@ import apiTCG from '@/services/apiTCG.js'
     ul{
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        column-gap: 45px;
+        column-gap: 10px;
         row-gap: 45px;
     }
     li img{
+        height: 350px;
+    }
+    li{
+        display: block;
         height: 350px;
     }
 </style>

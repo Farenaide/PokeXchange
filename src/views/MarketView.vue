@@ -1,8 +1,8 @@
 <template>
     <div class="wrapper">
         <SpreadCards class="market-itens"
-        :PageNumber="6"
-        :PageSize="20"
+        :PageNumber="'1'"
+        :PageSize="'36'"
         />
     </div>
 </template>

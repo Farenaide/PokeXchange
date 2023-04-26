@@ -2,8 +2,9 @@
     <article>
         <h3>Latest Cards</h3>
         <SpreadCards
-        :PageSize="10"
-        :PageNumber="2"
+        :PageSize="'10'"
+        :PageNumber="'2'"
+        :Subtypes="'mega'"
         />
     </article>
 </template>
@@ -15,7 +16,7 @@
         name: "LatestCards",
     components: {
         SpreadCards
-}
+    }
 };
 </script>
 
