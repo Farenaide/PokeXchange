@@ -1,15 +1,15 @@
 <template>
     <header>
         <nav>            
-            <RouterLink class="logo" to="/"><h1>
-                <span class="poke">Poke</span>X<span class="change">change</span>
+            <RouterLink class="nav-logo" to="/"><h1>
+                <span class="nav-poke">Poke</span>X<span class="nav-change">change</span>
             </h1></RouterLink>
-            <RouterLink class="menu-hover" to="/">Home</RouterLink>
-            <RouterLink class="menu-hover menu-hover--variation" to="/market">Market</RouterLink>
-            <RouterLink class="menu-hover" to="/about">About</RouterLink>
+            <RouterLink class="nav-menu-hover" to="/">Home</RouterLink>
+            <RouterLink class="nav-menu-hover menu-hover--variation" to="/market">Market</RouterLink>
+            <RouterLink class="nav-menu-hover" to="/about">About</RouterLink>
             <button>
-                <div class="button">Connect Wallet</div>
-                <span class="gradient"></span>
+                <div class="nav-button">Connect Wallet</div>
+                <span class="nav-gradient"></span>
             </button>
         </nav>
     </header>
@@ -33,7 +33,7 @@
         justify-content: center;
         gap: 85px;
     }
-    .logo{
+    .nav-logo{
         font-family: var(--font-Noto-Sans);
         font-weight: 500;
         font-size: 40px;
@@ -41,11 +41,11 @@
         margin-left: 20px;
     }
 
-    .menu-hover{
+    .nav-menu-hover{
         position: relative;
     }
 
-    .menu-hover::after{
+    .nav-menu-hover::after{
         content: '';
         display: block;
         width: 0%;
@@ -58,13 +58,13 @@
         transform: translateX(-50%);
     }
 
-    .menu-hover:hover::after{
+    .nav-menu-hover:hover::after{
         width: 100%;
         background-color: var(--color-second);
         transform: translateX(-50%);
     }
 
-    .menu-hover--variation:hover::after{
+    .nav-menu-hover--variation:hover::after{
         background-color: var(--color-third);
     }
 
@@ -85,7 +85,7 @@
         margin: 0 auto;
         margin-right: 28px;
     }
-    .button{
+    .nav-button{
         box-sizing: border-box;
         background-color: var(--color-first);
         display: flex;
@@ -108,7 +108,7 @@
         scale: 1.05;
     }
 
-    .gradient{
+    .nav-gradient{
         box-sizing: border-box;
         display: block;
         background-image: linear-gradient(to right, var(--color-second), var(--color-third));
@@ -120,14 +120,14 @@
         transition: rotate 2s ease;
     }
 
-    .gradient:hover{
+    .nav-gradient:hover{
         rotate: 720deg;
     }
 
-    .poke{
+    .nav-poke{
         color: var(--color-second);        
     }
-    .change{
+    .nav-change{
         color: var(--color-third);
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <div  class="wrapper" @mousemove="mouseMove()" @mouseout="mouseOut()">
-        <div ref="elementRef" class="card">
+    <div  class="parallax-wrapper" @mousemove="mouseMove()" @mouseout="mouseOut()">
+        <div ref="elementRef" class="parallax-card">
             <slot></slot>
         </div>
     </div>
@@ -49,7 +49,7 @@ export default {
 </script>
 
 <style>
-    .wrapper{
+    .parallax-wrapper{
         width: 100%;
         height: 100%;
         display: flex;
@@ -60,7 +60,7 @@ export default {
         margin: 0 auto;
     }
 
-    .card{
+    .parallax-card{
         width: 100%;
         height: 100%;
         position: relative;

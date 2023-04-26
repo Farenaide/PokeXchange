@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper-itens">
         <SpreadCards class="market-itens"
         :PageNumber="'1'"
         :PageSize="'36'"
@@ -20,7 +20,7 @@
 </script>
 
 <style scoped>
-    .wrapper{
+    .wrapper-itens{
         max-width: 1440px;
         height: 85vh;
         margin: 0 auto;
