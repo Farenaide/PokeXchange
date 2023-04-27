@@ -17,7 +17,7 @@
             </div>
         </div>
         <SpreadCards class="threeCard"
-        :PageSize="'3'"
+        :PageSize="3"
         :PageNumber="randomPage"
         :Subtypes="'mega'"
         :ImageSize="'large'"
