@@ -1,5 +1,9 @@
 <template>
         <ul>
+            <div class="not-found" v-if="dataCards.length == 0">
+                <h3>No cards matches your filter</h3>
+                <img src="../../public/pikachunotfound.png" alt="Card not found">
+            </div>
             <li v-for="card in dataCards" :key="card.cardId">
                 <ParallaxCard>
                     <img :src="card.cardImage" :alt="card.cardName">
@@ -19,21 +23,30 @@ import apiTCG from '@/services/apiTCG.js'
     setup(props) {
         
         const dataCards = ref([]);
-        for (let index = 0; index < props.PageSize; index++) {
-            dataCards.value.push({
-                cardId: `${index}`, 
-                cardName: 'Default Card', 
-                cardImage: './public/loadingTCG.gif'
-            })
+        const createLoading =(size)=>{
+            dataCards.value = []
+            if(size > 0){
+                for (let index = 0; index < size; index++) {
+                    dataCards.value.push({
+                        cardId: `${index}`, 
+                        cardName: 'Default Card', 
+                        cardImage: './public/loadingTCG.gif'
+                    })
+                }
+            } else{
+                console.log('vazio');
+            }
         }
+        createLoading(props.PageSize)
         
         onMounted(()=>{
             apiTCG.get('/cards', { 
                 params: {
                     pageSize: props.PageSize, 
                     page: props.PageNumber,
-                    q: `name:${props.Name} subtypes:${props.Subtypes}`,
+                    q: `name:${props.Name}* subtypes:${props.Subtypes}`,
             }}).then((response) => {
+                createLoading(response.data.data.length)
                 response.data.data.map((card, index) => {
                     dataCards.value.splice(index, 1, {
                         cardId: card.id, 
@@ -41,7 +54,7 @@ import apiTCG from '@/services/apiTCG.js'
                         cardImage: card.images[`${props.ImageSize}`]
                     })
                     dataCards.value.unshift(); 
-                }); 
+                }); // 
             });
         })
 
@@ -53,8 +66,8 @@ import apiTCG from '@/services/apiTCG.js'
         ParallaxCard,
     },
     props:{
-        PageSize: {type: String, default: 'n/a'},
-        PageNumber: {type: String, default: 'n/a'},
+        PageSize: {type: Number, default: 0},
+        PageNumber: {type: Number, default: 0},
         Name: {type: String, default:'*'},        
         Subtypes: {type: String, default:'*'},
         ImageSize: {type: String, default:'small'} //small, large
@@ -68,6 +81,7 @@ import apiTCG from '@/services/apiTCG.js'
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         column-gap: 10px;
         row-gap: 45px;
+        position: relative;
     }
     li img{
         height: 350px;
@@ -76,4 +90,18 @@ import apiTCG from '@/services/apiTCG.js'
         display: block;
         height: 350px;
     }
+    .not-found{
+        width: 100%;
+        height: 500px;
+        position: absolute;
+        font-family: var(--font-Noto-Sans);
+        color: var(--color-fourth);
+        text-align: center;
+        font-size: 50px;
+        font-weight: 900;
+    }
+
+    .not-found img {
+        margin-top: 20px;
+    }   
 </style>
