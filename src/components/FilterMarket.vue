@@ -14,7 +14,7 @@
 
         <div class="filter-types" @change="$emit('changeType', strSelectedTypes)">
             <label :for="element" v-for="element in allTypes" :key="element" >
-                <img :src="`public/badgeTypes/${element}.png`" :alt="element">
+                <img :src="`/public/${element}.png`" :alt="element">
                 <p>{{ element }}</p>
                 <input 
                 class="type-checkbox"
