@@ -1,28 +1,29 @@
 <template>
     <nav>
         <label class="search-name" for="search-name">
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-magnifying-glass" @click="$emit('changeSearchName', searchName)"></i>
             <input
             class="search-name-input"
             v-model="searchName"
-            @change="$emit('changeSearchName', searchName)"
+            @keyup.enter="$emit('changeSearchName', searchName)"
             id="search-name" 
             type="text" 
             placeholder="e.g. Pikachu"
             />
         </label> 
 
-        <div class="filter-types">
-            <label :for="element" v-for="element in types" :key="element" >
-                <img :src="`../../public/types/${element}.png`" :alt="element">
+        <div class="filter-types" @change="$emit('changeType', strSelectedTypes)">
+            <label :for="element" v-for="element in allTypes" :key="element" >
+                <img :src="`public/badgeTypes/${element}.png`" :alt="element">
                 <p>{{ element }}</p>
                 <input 
+                class="type-checkbox"
                 type="checkbox" 
                 name="type" 
                 :id="element"
-                :true-value="typeFilter"
-                :false-value="typeFilter"
-                @click="$emit('update:typeFilter', `${element}`)"
+                :value="`types:${element}`"
+                v-model="selectedTypes"
+                @change="concatTypes"
                 />
             </label>
         </div>
@@ -31,28 +32,41 @@
 
 <script>
     import { ref } from 'vue'
-    import apiTCG from '@/services/apiTCG.js'
 
     export default {
-        name: 'FilterMarket',
-        props: {
-            typeFilter: String
-        },
-        components:{
-        }
-        ,        
-        emits: ['changeSearchName'],
+        name: 'FilterMarket',        
+        emits: [
+            'changeSearchName', 
+            'changeType',
+        ],
         setup(){
-            const types = ref([])
+            const allTypes = ref([
+                "Colorless",
+                "Darkness",
+                "Dragon",
+                "Fairy",
+                "Fighting",
+                "Fire",
+                "Grass",
+                "Lightning",
+                "Metal",
+                "Psychic",
+                "Water"
+            ])
             const searchName = ref('')
-
-            apiTCG.get('/types').then((response) => {
-                types.value = response.data.data
-            }); 
+            const selectedTypes = ref([])
+            const strSelectedTypes = ref('')
+            
+            const concatTypes = ()=>{
+                strSelectedTypes.value = selectedTypes.value.join(' ')
+            }
 
             return{
-                types,
-                searchName
+                allTypes,
+                searchName,
+                selectedTypes,
+                strSelectedTypes,
+                concatTypes
             }
         }
     }
@@ -120,6 +134,19 @@
         margin-right: 5px;
     }
 
+    .type-checkbox{
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        height: 15px;
+        width: 15px;
+        border-radius: 4px;
+        background-color: var(--color-white);
+        cursor: pointer;
+    }
+    .type-checkbox:checked{
+        background-color: var(--color-third);
+    }
 
 </style>
 

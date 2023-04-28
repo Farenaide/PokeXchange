@@ -64,10 +64,6 @@
         transform: translateX(-50%);
     }
 
-    .nav-menu-hover--variation:hover::after{
-        background-color: var(--color-third);
-    }
-
     button{
         --radius: 15px;
         position: relative;

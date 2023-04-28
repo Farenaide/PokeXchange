@@ -2,16 +2,19 @@
     <div class="wrapper-template">
         <div class="side-bar">
             <FilterMarket
-            v-model:searchName="searchName"
+                @changeSearchName="handleName"
+                @changeType="handleType"
             />
         </div>
+        {{ typeFilter }}
         <div class="wrapper-itens">
             <SpreadCards
                 class="market-itens"
                 :Name="searchName"
                 :PageNumber="1"
                 :PageSize="24"
-                :key="searchName"
+                :SelectedTypes="selectedTypes"
+                :key="[selectedTypes, searchName]"
             />
         </div>
     </div>
@@ -29,9 +32,23 @@
         },
         setup() {
             const searchName = ref('')
+            const selectedTypes = ref('')
+
+            const handleName = (newName)=>{
+                searchName.value = newName
+            }
+
+            const handleType = (newType)=>{
+                selectedTypes.value = newType
+            }
+
+            const typeFilter = ref('')
             return {
-                FilterMarket,
-                searchName
+                searchName,
+                typeFilter,
+                handleName,
+                selectedTypes,
+                handleType
             }
         },
     }
@@ -48,16 +65,16 @@
 
     .side-bar{
         flex-grow: 1;
-        max-width: 100%;
+        max-width: 280px;
         height: 85vh;
     }
     .wrapper-itens{
-        flex-grow: 2;
-        max-width: 1440px;
+        flex-grow: 1;
+        max-width: 1100px;
         height: 85vh;
         margin: 0 auto;
         overflow-y: scroll;
-        border: 1px dotted red;
+        border: 1px dotted rgb(0, 225, 255);
     }
     .market-itens{
         max-width: 990px;

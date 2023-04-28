@@ -2,7 +2,7 @@
         <ul>
             <div class="not-found" v-if="dataCards.length == 0">
                 <h3>No cards matches your filter</h3>
-                <img src="../../public/pikachunotfound.png" alt="Card not found">
+                <img src="/pikachunotfound.png" alt="Card not found">
             </div>
             <li v-for="card in dataCards" :key="card.cardId">
                 <ParallaxCard>
@@ -14,7 +14,7 @@
 
 <script>
 
-import apiTCG from '@/services/apiTCG.js'
+    import apiTCG from '@/services/apiTCG.js'
     import ParallaxCard from './ParallaxCard.vue';
     import { ref, onMounted } from 'vue'
 
@@ -30,11 +30,9 @@ import apiTCG from '@/services/apiTCG.js'
                     dataCards.value.push({
                         cardId: `${index}`, 
                         cardName: 'Default Card', 
-                        cardImage: './public/loadingTCG.gif'
+                        cardImage: '/loadingTCG.gif'
                     })
                 }
-            } else{
-                console.log('vazio');
             }
         }
         createLoading(props.PageSize)
@@ -44,7 +42,7 @@ import apiTCG from '@/services/apiTCG.js'
                 params: {
                     pageSize: props.PageSize, 
                     page: props.PageNumber,
-                    q: `name:${props.Name}* subtypes:${props.Subtypes}`,
+                    q: `name:${props.Name}* subtypes:${props.Subtypes} ${props.SelectedTypes}`,
             }}).then((response) => {
                 createLoading(response.data.data.length)
                 response.data.data.map((card, index) => {
@@ -54,9 +52,10 @@ import apiTCG from '@/services/apiTCG.js'
                         cardImage: card.images[`${props.ImageSize}`]
                     })
                     dataCards.value.unshift(); 
-                }); // 
+                });
             });
         })
+
 
         return {
             dataCards,
@@ -70,7 +69,9 @@ import apiTCG from '@/services/apiTCG.js'
         PageNumber: {type: Number, default: 0},
         Name: {type: String, default:'*'},        
         Subtypes: {type: String, default:'*'},
-        ImageSize: {type: String, default:'small'} //small, large
+        ImageSize: {type: String, default:'small'},
+        SelectedTypes: {type: String, default:''}
+        
     }
 }
 </script>
