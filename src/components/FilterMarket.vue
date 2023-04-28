@@ -12,7 +12,28 @@
             />
         </label> 
 
-        <div class="filter-types" @change="$emit('changeType', strSelectedTypes)">
+        <div class="filter-supertypes" 
+        @change="[
+            $emit('changeSuperType', selectedSuperType), 
+            $emit('changeType', ''), 
+            uncheck(), 
+            selectedTypes = []]"
+        >
+            <label v-for="supertype in allSuperTypes" :key="supertype">
+                <input class="search-supertype-input"
+                type="radio" 
+                name="superTypes" 
+                :id="supertype" 
+                :value="supertype" 
+                v-model="selectedSuperType">
+                <p>{{ supertype }}</p>
+            </label>
+        </div>
+
+        <div v-if="selectedSuperType === 'Pokémon'" 
+            class="filter-types" 
+            @change="$emit('changeType', strSelectedTypes)
+        ">
             <label :for="element" v-for="element in allTypes" :key="element" >
                 <img :src="`/pokemonTypes/${element}.png`" :alt="element">
                 <p>{{ element }}</p>
@@ -31,7 +52,7 @@
 </template>
 
 <script>
-    import { ref } from 'vue'
+    import { ref, onMounted } from 'vue'
     import myData from '../services/myData'
 
     export default {
@@ -39,24 +60,46 @@
         emits: [
             'changeSearchName', 
             'changeType',
+            'changeSuperType'
         ],
         setup(){
             const allTypes = myData.types
+            const allSuperTypes = myData.supertypes
 
             const searchName = ref('')
             const selectedTypes = ref([])
+            const selectedSuperType = ref('Pokémon')
             const strSelectedTypes = ref('')
+
+            const uncheck = ()=>{
+                const $myCheckBoxs = [...document.querySelectorAll('.type-checkbox')]
+                $myCheckBoxs.map(checkbox=>{
+                    checkbox.checked = false
+                    console.log(checkbox);
+                })
+                
+            }
             
             const concatTypes = ()=>{
                 strSelectedTypes.value = selectedTypes.value.join(' ')
             }
+
+            onMounted(()=>{
+                const $filterSuperTypes = document.querySelector('.filter-supertypes')
+                $filterSuperTypes.firstElementChild.firstElementChild.checked = true
+            })
+
             
+
             return{
                 allTypes,
+                allSuperTypes,
                 searchName,
                 selectedTypes,
+                selectedSuperType,
                 strSelectedTypes,
-                concatTypes
+                concatTypes,
+                uncheck
             }
         }
     }
@@ -137,6 +180,36 @@
     .type-checkbox:checked{
         background-color: var(--color-third);
     }
+    .filter-supertypes{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin: 20px auto 0;
+        margin-left: 0;
+        cursor: pointer;
+    }
 
+    .filter-supertypes label{
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .search-supertype-input{
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        margin: 0;
+        margin-right: 5px;
+        margin-bottom: 2px;
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        background-color: var(--color-white);
+        cursor: pointer;
+    }
+    .search-supertype-input:checked{
+        background-color: var(--color-third);
+    }
 </style>
 

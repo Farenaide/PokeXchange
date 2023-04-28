@@ -65,9 +65,9 @@ const myData = {
         "Water"
     ],
     supertypes: [
-        "Energy",
         "Pokémon",
-        "Trainer"
+        "Trainer",
+        "Energy"
     ]
 }
 

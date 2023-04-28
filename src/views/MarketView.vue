@@ -4,6 +4,7 @@
             <FilterMarket
                 @changeSearchName="handleName"
                 @changeType="handleType"
+                @changeSuperType="handleSuperType"
             />
         </div>
         {{ typeFilter }}
@@ -14,7 +15,8 @@
                 :PageNumber="1"
                 :PageSize="24"
                 :SelectedTypes="selectedTypes"
-                :key="[selectedTypes, searchName]"
+                :SelectedSuperType="selectedSuperType"
+                :key="[selectedTypes, searchName, selectedSuperType]"
             />
         </div>
     </div>
@@ -33,6 +35,7 @@
         setup() {
             const searchName = ref('')
             const selectedTypes = ref('')
+            const selectedSuperType = ref('*')
 
             const handleName = (newName)=>{
                 searchName.value = newName
@@ -42,13 +45,19 @@
                 selectedTypes.value = newType
             }
 
+            const handleSuperType = (newSuperType)=>{
+                selectedSuperType.value = newSuperType
+            }
+
             const typeFilter = ref('')
             return {
                 searchName,
                 typeFilter,
                 handleName,
                 selectedTypes,
-                handleType
+                selectedSuperType,
+                handleType,
+                handleSuperType
             }
         },
     }

@@ -42,7 +42,7 @@
                 params: {
                     pageSize: props.PageSize, 
                     page: props.PageNumber,
-                    q: `name:${props.Name}* subtypes:${props.Subtypes} ${props.SelectedTypes}`,
+                    q: `name:${props.Name}* subtypes:${props.Subtypes} ${props.SelectedTypes} supertype:${props.SelectedSuperType}`,
             }}).then((response) => {
                 createLoading(response.data.data.length)
                 response.data.data.map((card, index) => {
@@ -70,7 +70,8 @@
         Name: {type: String, default:'*'},        
         Subtypes: {type: String, default:'*'},
         ImageSize: {type: String, default:'small'},
-        SelectedTypes: {type: String, default:''}
+        SelectedTypes: {type: String, default:''},
+        SelectedSuperType: {type: String, default:'*'}
         
     }
 }
