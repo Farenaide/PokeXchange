@@ -14,7 +14,7 @@
 
         <div class="filter-types" @change="$emit('changeType', strSelectedTypes)">
             <label :for="element" v-for="element in allTypes" :key="element" >
-                <img :src="`/public/${element}.png`" :alt="element">
+                <img :src="`/pokemonTypes/${element}.png`" :alt="element">
                 <p>{{ element }}</p>
                 <input 
                 class="type-checkbox"
@@ -32,6 +32,7 @@
 
 <script>
     import { ref } from 'vue'
+    import myData from '../services/myData'
 
     export default {
         name: 'FilterMarket',        
@@ -40,19 +41,8 @@
             'changeType',
         ],
         setup(){
-            const allTypes = ref([
-                "Colorless",
-                "Darkness",
-                "Dragon",
-                "Fairy",
-                "Fighting",
-                "Fire",
-                "Grass",
-                "Lightning",
-                "Metal",
-                "Psychic",
-                "Water"
-            ])
+            const allTypes = myData.types
+
             const searchName = ref('')
             const selectedTypes = ref([])
             const strSelectedTypes = ref('')
@@ -60,7 +50,7 @@
             const concatTypes = ()=>{
                 strSelectedTypes.value = selectedTypes.value.join(' ')
             }
-
+            
             return{
                 allTypes,
                 searchName,
