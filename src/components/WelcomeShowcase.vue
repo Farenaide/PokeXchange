@@ -55,7 +55,7 @@ import SpreadCards from './SpreadCards.vue';
         justify-content: center;
         max-width: 1440px;
         height: 600px;
-        margin: 43px auto 0;
+        margin: 0 auto;
         flex-wrap: wrap;
         position: relative;
         gap: 40px;

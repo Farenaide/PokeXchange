@@ -1,9 +1,9 @@
 <template>
     <header>
         <nav>            
-            <RouterLink class="nav-logo" to="/"><h1>
-                <span class="nav-poke">Poke</span>X<span class="nav-change">change</span>
-            </h1></RouterLink>
+            <RouterLink class="nav-logo" to="/">
+                <img src="/pokeXchangeLogo.jpg" alt="PokeXChange Logo">
+            </RouterLink>
             <RouterLink class="nav-menu-hover" to="/">Home</RouterLink>
             <RouterLink class="nav-menu-hover menu-hover--variation" to="/market">Market</RouterLink>
             <RouterLink class="nav-menu-hover" to="/about">About</RouterLink>
@@ -33,12 +33,13 @@
         justify-content: center;
         gap: 85px;
     }
+
     .nav-logo{
-        font-family: var(--font-Noto-Sans);
-        font-weight: 500;
-        font-size: 40px;
-        margin: auto;
-        margin-left: 20px;
+        margin: 0 auto;
+        margin-left: 0;
+    }
+    .nav-logo img{
+        height: 120px;
     }
 
     .nav-menu-hover{

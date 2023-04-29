@@ -84,6 +84,7 @@
         column-gap: 10px;
         row-gap: 45px;
         position: relative;
+        
     }
     li img{
         height: 350px;
