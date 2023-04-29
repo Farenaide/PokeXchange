@@ -124,8 +124,7 @@ import SpreadCards from './SpreadCards.vue';
     height: 400px;
     box-shadow: 5px 5px 20px rgb(0, 0, 0);
     border-radius: 15px;
-    margin-top: -20px;
-    transform: rotate(5deg)
+    transform: rotate(5deg);
 }
 
 .threeCard :nth-child(2) img{

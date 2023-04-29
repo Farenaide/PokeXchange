@@ -20,8 +20,8 @@ export default {
         const posY = ref(null)
         const elementRef = ref(null)
         const {elementX, elementY, elementHeight, elementWidth} = useMouseInElement(elementRef)
-        const intensity = 8
         const mouseMove = () =>{           
+            const intensity = (elementHeight.value * elementWidth.value)/ 19000
             posX.value = (elementX.value - (elementWidth.value / 2)) / intensity
             posY.value = -(elementY.value - (elementHeight.value / 2)) / intensity
             elementRef.value.setAttribute('style',`transform: rotateX(${posY.value}deg) rotateY(${posX.value}deg);`)
