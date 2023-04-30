@@ -4,7 +4,7 @@
             <i class="fa-solid fa-magnifying-glass"></i>
             <input
             class="search-name-input"
-            v-model="searchName"
+            v-model.trim="searchName"
             @input="$emit('changeSearchName', searchName)"
             id="search-name" 
             type="text" 
