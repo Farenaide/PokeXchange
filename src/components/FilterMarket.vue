@@ -1,11 +1,11 @@
 <template>
     <nav>
         <label class="search-name" for="search-name">
-            <i class="fa-solid fa-magnifying-glass" @click="$emit('changeSearchName', searchName)"></i>
+            <i class="fa-solid fa-magnifying-glass"></i>
             <input
             class="search-name-input"
             v-model="searchName"
-            @keyup.enter="$emit('changeSearchName', searchName)"
+            @input="$emit('changeSearchName', searchName)"
             id="search-name" 
             type="text" 
             placeholder="e.g. Pikachu"
@@ -15,9 +15,11 @@
         <div class="filter-supertypes" 
         @change="[
             $emit('changeSuperType', selectedSuperType), 
-            $emit('changeType', ''), 
-            uncheck(), 
-            selectedTypes = []]"
+            $emit('changeType', selectedTypes = []),
+            $emit('changeSubtype', selectedSubtype = '*') ,
+            $emit('changeSearchName', searchName = ''),
+            changeSubtypeOptions()
+            ]"
         >
             <label v-for="supertype in allSuperTypes" :key="supertype">
                 <input class="search-supertype-input"
@@ -29,13 +31,27 @@
                 <p>{{ supertype }}</p>
             </label>
         </div>
+        
+        <div class="filter-subtypes">
+            <select v-model="selectedSubtype" @change="$emit('changeSubtype', selectedSubtype)">
+                <option value="*">All Subtypes</option>
+                <option 
+                v-for="subtype in subtypes" 
+                :key="subtype" 
+                :value="subtype"
+                id="allOptions"
+                >
+                    <div>{{ subtype }}</div>
+                </option>
+            </select>
+        </div>
 
         <div v-if="selectedSuperType === 'Pokémon'" 
             class="filter-types" 
-            @change="$emit('changeType', strSelectedTypes)
+            @change="$emit('changeType', selectedTypes.join(' '))
         ">
             <label :for="element" v-for="element in allTypes" :key="element" >
-                <img :src="`/pokemonTypes/${element}.png`" :alt="element">
+                <img :src="`public/pokemonTypes/${element}.png`" :alt="element">
                 <p>{{ element }}</p>
                 <input 
                 class="type-checkbox"
@@ -44,7 +60,6 @@
                 :id="element"
                 :value="`types:${element}`"
                 v-model="selectedTypes"
-                @change="concatTypes"
                 />
             </label>
         </div>
@@ -52,7 +67,7 @@
 </template>
 
 <script>
-    import { ref, onMounted } from 'vue'
+    import { ref } from 'vue'
     import myData from '../services/myData'
 
     export default {
@@ -60,46 +75,47 @@
         emits: [
             'changeSearchName', 
             'changeType',
-            'changeSuperType'
+            'changeSuperType',
+            'changeSubtype'
         ],
         setup(){
             const allTypes = myData.types
             const allSuperTypes = myData.supertypes
+            const trainerSubtypes = myData.subtypes.trainerSubtypes
+            const pokemonSubtypes = myData.subtypes.pokemonSubtypes
+            const energySubtypes = myData.subtypes.energySubtypes
+            const subtypes = ref(pokemonSubtypes)
 
             const searchName = ref('')
             const selectedTypes = ref([])
+            const selectedSubtype = ref('*')
             const selectedSuperType = ref('Pokémon')
-            const strSelectedTypes = ref('')
 
-            const uncheck = ()=>{
-                const $myCheckBoxs = [...document.querySelectorAll('.type-checkbox')]
-                $myCheckBoxs.map(checkbox=>{
-                    checkbox.checked = false
-                    console.log(checkbox);
-                })
-                
+            const changeSubtypeOptions = ()=>{
+                switch (selectedSuperType.value) {
+                    case 'Pokémon':
+                        subtypes.value = pokemonSubtypes
+                        break;
+                    case 'Trainer':
+                        subtypes.value = trainerSubtypes
+                        break
+                    case 'Energy':
+                        subtypes.value = energySubtypes
+                        break
+                    default:
+                        break;
+                }
             }
             
-            const concatTypes = ()=>{
-                strSelectedTypes.value = selectedTypes.value.join(' ')
-            }
-
-            onMounted(()=>{
-                const $filterSuperTypes = document.querySelector('.filter-supertypes')
-                $filterSuperTypes.firstElementChild.firstElementChild.checked = true
-            })
-
-            
-
             return{
                 allTypes,
                 allSuperTypes,
+                subtypes,
                 searchName,
                 selectedTypes,
+                selectedSubtype,
                 selectedSuperType,
-                strSelectedTypes,
-                concatTypes,
-                uncheck
+                changeSubtypeOptions
             }
         }
     }
@@ -211,5 +227,44 @@
     .search-supertype-input:checked{
         background-color: var(--color-third);
     }
+
+    .filter-subtypes{
+        box-sizing: border-box;
+        margin-top: 20px;
+        width: 100%;
+        height: 40px;
+        position: relative;
+    }
+
+    .filter-subtypes::after{
+        content: '\25B8';
+        display: block;
+        height: 50%;
+        position: absolute;
+        right: 10px;
+        top: 25%;
+        rotate: 90deg;
+    }
+    .filter-subtypes select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+        color: var(--color-white);
+        padding: 0 10px;
+        cursor: pointer;
+        background: var(--color-first--variant);
+        user-select: none;
+    }
+
+    .filter-subtypes select:focus {
+        outline: none;
+        border: none;
+        border: 2px solid var(--color-third);
+        
+    }
+
 </style>
 

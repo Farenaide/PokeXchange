@@ -56,6 +56,7 @@ export default {
         perspective: 600px;
         cursor: pointer;
         margin: 0 auto;
+        user-select: none;
     }
 
     .parallax-card{

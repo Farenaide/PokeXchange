@@ -5,6 +5,7 @@
                 @changeSearchName="handleName"
                 @changeType="handleType"
                 @changeSuperType="handleSuperType"
+                @changeSubtype="handleSubtype"
             />
         </div>
         {{ typeFilter }}
@@ -16,7 +17,8 @@
                 :PageSize="24"
                 :SelectedTypes="selectedTypes"
                 :SelectedSuperType="selectedSuperType"
-                :key="[selectedTypes, searchName, selectedSuperType]"
+                :SelectedSubtypes="selectedSubtype"
+                :key="[selectedTypes, searchName, selectedSuperType, selectedSubtype]"
             />
         </div>
     </div>
@@ -36,6 +38,7 @@
             const searchName = ref('')
             const selectedTypes = ref('')
             const selectedSuperType = ref('*')
+            const selectedSubtype = ref('*')
 
             const handleName = (newName)=>{
                 searchName.value = newName
@@ -49,6 +52,10 @@
                 selectedSuperType.value = newSuperType
             }
 
+            const handleSubtype = (newSubtype)=>{
+                selectedSubtype.value = newSubtype
+            }
+
             const typeFilter = ref('')
             return {
                 searchName,
@@ -56,8 +63,10 @@
                 handleName,
                 selectedTypes,
                 selectedSuperType,
+                selectedSubtype,
                 handleType,
-                handleSuperType
+                handleSuperType,
+                handleSubtype
             }
         },
     }

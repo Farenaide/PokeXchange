@@ -19,7 +19,7 @@
         <SpreadCards class="threeCard"
         :PageSize="3"
         :PageNumber="randomPage"
-        :Subtypes="'mega'"
+        :SelectedSubtypes="'mega'"
         :ImageSize="'large'"
         />
     </article>
@@ -83,7 +83,6 @@ import SpreadCards from './SpreadCards.vue';
     .cardsString{
         color: var(--color-third)
     }
-
     .info{
         width: 470px;
         font-family: var(--font-Roboto);

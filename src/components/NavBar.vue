@@ -2,7 +2,8 @@
     <header>
         <nav>            
             <RouterLink class="nav-logo" to="/">
-                <img src="/pokeXchangeLogo.jpg" alt="PokeXChange Logo">
+                <img src="/pokeXchangeLogo.png" alt="PokeXChange Logo">
+                <h1><span class="nav-poke">Poke</span>X<br><span class="nav-change">change</span></h1>
             </RouterLink>
             <RouterLink class="nav-menu-hover" to="/">Home</RouterLink>
             <RouterLink class="nav-menu-hover menu-hover--variation" to="/market">Market</RouterLink>
@@ -37,9 +38,29 @@
     .nav-logo{
         margin: 0 auto;
         margin-left: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        user-select: none;
     }
     .nav-logo img{
         height: 120px;
+    }
+
+    .nav-poke{
+        color: var(--color-second);        
+    }
+    .nav-change{
+        color: var(--color-third);
+        margin-left: -10px;
+    }
+
+    h1{
+        margin-top: 30px;
+        font-family: var(--font-Noto-Sans);
+        font-weight: 800;
+        font-size: 40px;
+        line-height: 23px;
     }
 
     .nav-menu-hover{
@@ -121,10 +142,4 @@
         rotate: 720deg;
     }
 
-    .nav-poke{
-        color: var(--color-second);        
-    }
-    .nav-change{
-        color: var(--color-third);
-    }
 </style>
