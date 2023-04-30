@@ -11,10 +11,7 @@
     import { useMouseInElement } from '@vueuse/core'
 
 export default {
-    name:'ParallaxCard', 
-    props :{
-        cardObject: Object
-    },   
+    name:'ParallaxCard',   
     setup() {
         const posX = ref(null)
         const posY = ref(null)
@@ -42,10 +39,6 @@ export default {
         }
     },
 }
-</script>
-
-<script setup>
-    
 </script>
 
 <style>

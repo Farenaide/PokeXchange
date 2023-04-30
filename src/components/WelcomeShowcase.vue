@@ -19,7 +19,7 @@
         <SpreadCards class="threeCard"
         :PageSize="3"
         :PageNumber="randomPage"
-        :SelectedSubtypes="'mega'"
+        :SelectedSubtypes="'MEGA'"
         :ImageSize="'large'"
         />
     </article>

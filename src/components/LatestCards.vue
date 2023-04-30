@@ -4,7 +4,7 @@
         <SpreadCards
         :PageSize="10"
         :PageNumber="2"
-        :Subtypes="'mega'"
+        :SelectedSubtypes="'MEGA'"
         />
     </article>
 </template>

@@ -94,14 +94,16 @@
         height: 350px;
     }
     .not-found{
-        width: 100%;
         height: 500px;
-        position: absolute;
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 70px;
         font-family: var(--font-Noto-Sans);
         color: var(--color-fourth);
         text-align: center;
         font-size: 50px;
         font-weight: 900;
+        grid-column: 1/4;
     }
 
     .not-found img {
