@@ -46,22 +46,25 @@
             </select>
         </div>
 
-        <div v-if="selectedSuperType === 'Pokémon'" 
-            class="filter-types" 
-            @change="$emit('changeType', selectedTypes.join(' '))
-        ">
-            <label :for="element" v-for="element in allTypes" :key="element" >
-                <img :src="`public/pokemonTypes/${element}.png`" :alt="element">
-                <p>{{ element }}</p>
-                <input 
-                class="type-checkbox"
-                type="checkbox" 
-                name="type" 
-                :id="element"
-                :value="`types:${element}`"
-                v-model="selectedTypes"
-                />
-            </label>
+        <div class="types-wrapper"
+            v-if="selectedSuperType === 'Pokémon'"
+            @change="$emit('changeType', selectedTypes.join(' '))"
+        >
+            <div class="input-wrapper"
+            v-for="element in allTypes" :key="element"> 
+                <input   
+                    :class="`filter-${element}`"
+                    :id="element"                 
+                    type="checkbox"
+                    name="type"
+                    :value="`types:${element}`"
+                    v-model="selectedTypes"
+                    />
+                <label :for="element" class="label-types">
+                    <img :src="`public/pokemonTypes/${element}.png`" :alt="element">
+                    <p>{{ element }}</p>
+                </label>
+            </div>
         </div>
     </nav>
 </template>
@@ -134,16 +137,20 @@
     }
 
     .search-name{
+        box-sizing: border-box;
         display: flex;
         align-items: center;
-        height: 30px;
+        height: 40px;
         width: 100%;
-        border: 1px dotted red;
+        position: relative;
+        border: 1px solid var(--color-white);
     }
     .fa-solid{
         margin-right: 10px;
         font-size: 20px;
         cursor: pointer;
+        position: absolute;
+        left: 10px;
     }
     .search-name-input {
         flex-grow: 1;        
@@ -152,50 +159,17 @@
         border: none;
         width: 0;
         min-width: 100px;
-        border-radius: 15px;
-        height: 30px;
-        background-color: var(--color-white-alpha);
+        height: 100%;
+        background-color: var(--color-first--variant);
         padding: 0 15px;
+        padding-left: 40px;
         color: var(--color-white);
     }
-    .filter-types{
-        width: 100%;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-        gap: 5px;
-        border: 1px dotted red;
-        box-sizing: border-box;
-        margin: 30px auto 0;
-    }
-    .filter-types label{
-        display: flex;
-        width: 110px;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 15px;
-        font-family: var(--font-Roboto);
-        font-weight: 500;
-        cursor: pointer;
-        margin: 0 auto;
-    }
-    .filter-types label img {
-        height: 15px;
-        margin-right: 5px;
-    }
 
-    .type-checkbox{
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        height: 15px;
-        width: 15px;
-        border-radius: 4px;
-        background-color: var(--color-white);
-        cursor: pointer;
+    .search-name-input:focus{
+        outline: 2px solid var(--color-third);
     }
-    .type-checkbox:checked{
-        background-color: var(--color-third);
-    }
+    
     .filter-supertypes{
         display: flex;
         flex-direction: column;
@@ -257,8 +231,8 @@
         cursor: pointer;
         background: var(--color-first--variant);
         user-select: none;
+        border: 1px solid var(--color-white);
     }
-
     .filter-subtypes select:focus {
         outline: none;
         border: none;
@@ -266,5 +240,125 @@
         
     }
 
+    .label-types img {
+        width: 15px;
+        filter: brightness(1.5);
+        margin-right: 5px;
+    }
+    .types-wrapper{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .input-wrapper{
+        flex-grow: 1;
+    }
+    .input-wrapper input{
+        display: none;
+    }
+    .input-wrapper label{
+        display: flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        padding: 5px;
+        background-color: var(--color-first--variant);
+        border-radius: 8px;
+    }
+
 </style>
 
+<style scoped>
+    .filter-Colorless + label{
+        color: #fff;
+    }
+    .filter-Colorless:checked + label{
+        outline: 1px solid #fff;
+        filter: contrast(1.2);
+    }
+
+    .filter-Darkness + label{
+        color: #689ac6;
+    }
+    .filter-Darkness:checked + label{
+        outline: 1px solid #689ac6;
+        filter: contrast(1.2);
+    }
+
+    .filter-Dragon + label{
+        color: #f3d443;
+    }
+    .filter-Dragon:checked + label{
+        outline: 1px solid #f3d443;
+        filter: contrast(1.2);
+    }
+
+    .filter-Fairy + label{
+        color: #fc8cdf;
+    }
+    .filter-Fairy:checked + label{
+        outline: 1px solid #fc8cdf;
+        filter: contrast(1.2);
+    }
+
+    .filter-Fighting + label{
+        color: #ee4f30;
+    }
+    .filter-Fighting:checked + label{
+        outline: 1px solid #ee4f30;
+        filter: contrast(1.2);
+    }
+
+    .filter-Fire + label{
+        color: #f1353d;
+    }
+    .filter-Fire:checked + label{
+        outline: 1px solid #f1353d;
+        filter: contrast(1.2);
+    }
+
+    .filter-Grass + label{
+        color: #48b769;
+    }
+    .filter-Grass:checked + label{
+        outline: 1px solid #48b769;
+        filter: contrast(1.2);
+    }
+
+    .filter-Lightning + label{
+        color: #fcfe6a;
+    }
+    .filter-Lightning:checked + label{
+        outline: 1px solid #fcfe6a;
+        filter: contrast(1.2);
+    }
+
+    .filter-Metal + label{
+        color: #d6dce7;
+    }
+    .filter-Metal:checked + label{
+        outline: 1px solid #d6dce7;
+        filter: contrast(1.2);
+    }
+
+    .filter-Psychic + label{
+        color: #c770cd;
+    }
+    .filter-Psychic:checked + label{
+        outline: 1px solid #c770cd;
+        filter: contrast(1.2);
+    }
+
+    .filter-Water + label{
+        color: #27ffff;
+    }
+    .filter-Water:checked + label{
+        outline: 1px solid #27ffff;
+        filter: contrast(1.2);
+    }
+    
+</style>
