@@ -1,3 +1,7 @@
 <template>
-  <h1>ABOUTPAGE</h1>
+	<div>
+		<h1>ABOUT</h1>
+	</div>
 </template>
+
+

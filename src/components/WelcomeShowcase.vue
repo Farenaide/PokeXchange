@@ -16,23 +16,14 @@
                 <p>Daily Trades</p>
             </div>
         </div>
-        <SpreadCards class="threeCard"
-        :PageSize="3"
-        :PageNumber="randomPage"
-        :SelectedSubtypes="'MEGA'"
-        :ImageSize="'large'"
-        />
     </article>
 </template>
 
 <script>
     import { ref } from 'vue'
 
-import SpreadCards from './SpreadCards.vue';
-
     export default{
     name: "WelcomeShowcase",
-    components: { SpreadCards },
     setup(){
         const randomNumber = (min, max)=>{
             return Math.random() * (max - min) + min;
@@ -111,41 +102,4 @@ import SpreadCards from './SpreadCards.vue';
         font-size: 15px;
         font-weight: 200;
     }    
-</style>
-
-<style>
-.threeCard { 
-    position: relative;
-    margin-top: -10px;
-}
-
-.threeCard :nth-child(3) img{
-    height: 400px;
-    box-shadow: 5px 5px 20px rgb(0, 0, 0);
-    border-radius: 15px;
-    transform: rotate(5deg);
-}
-
-.threeCard :nth-child(2) img{
-    height: 400px;
-    position: absolute;
-    top: -30px;
-    transform: rotate(16.73deg);
-    left: 100px;
-    pointer-events: none;
-    box-shadow: 5px 5px 20px black;
-    border-radius: 15px;
-}
-
-.threeCard :nth-last-child(3) img{
-    height: 400px;
-    position: absolute;
-    top: -30px;
-    transform: rotate(32.73deg);
-    left: 200px;
-    pointer-events: none;
-    box-shadow: 5px 5px 20px black;
-    border-radius: 15px;
-}
-
 </style>

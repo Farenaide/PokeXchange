@@ -6,9 +6,9 @@
                 @changeType="handleType"
                 @changeSuperType="handleSuperType"
                 @changeSubtype="handleSubtype"
+                @changeHp="handleHealthPoints"
             />
         </div>
-        {{ typeFilter }}
         <div class="wrapper-itens">
             <SpreadCards
                 class="market-itens"
@@ -18,7 +18,8 @@
                 :SelectedTypes="selectedTypes"
                 :SelectedSuperType="selectedSuperType"
                 :SelectedSubtypes="selectedSubtype"
-                :key="[selectedTypes, searchName, selectedSuperType, selectedSubtype]"
+                :SelectedHealthPoints="selectedHealthPoint"
+                :key="[selectedTypes, searchName, selectedSuperType, selectedSubtype, selectedHealthPoint]"
             />
         </div>
     </div>
@@ -37,8 +38,9 @@
         setup() {
             const searchName = ref('')
             const selectedTypes = ref('')
-            const selectedSuperType = ref('*')
+            const selectedSuperType = ref('Pokémon')
             const selectedSubtype = ref('*')
+            const selectedHealthPoint = ref('')
 
             const handleName = (newName)=>{
                 searchName.value = newName
@@ -56,6 +58,10 @@
                 selectedSubtype.value = newSubtype
             }
 
+            const handleHealthPoints = (newHelthPoints)=>{
+                selectedHealthPoint.value = newHelthPoints
+            }
+
             const typeFilter = ref('')
             return {
                 searchName,
@@ -64,9 +70,11 @@
                 selectedTypes,
                 selectedSuperType,
                 selectedSubtype,
+                selectedHealthPoint,
                 handleType,
                 handleSuperType,
-                handleSubtype
+                handleSubtype,
+                handleHealthPoints
             }
         },
     }
@@ -77,7 +85,7 @@
         box-sizing: border-box;
         display: flex;
         max-width: 1440px;
-        margin: 0 auto;
+        margin: 50px auto 0;
         padding: 0 20px;
     }
 
@@ -92,12 +100,11 @@
         height: 85vh;
         margin: 0 auto;
         overflow-y: scroll;
-        border: 1px dotted rgb(0, 225, 255);
     }
     .market-itens{
         max-width: 990px;
         height: 1589px;
         margin-right: 0;
-        margin-top: 70px;
+        margin-top: 20px;
     }
 </style>

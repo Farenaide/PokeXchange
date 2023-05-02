@@ -18,7 +18,7 @@
             $emit('changeType', selectedTypes = []),
             $emit('changeSubtype', selectedSubtype = '*') ,
             $emit('changeSearchName', searchName = ''),
-            changeSubtypeOptions()
+            $emit('changeHp', ''),
             ]"
         >
             <label v-for="supertype in allSuperTypes" :key="supertype">
@@ -46,7 +46,7 @@
             </select>
         </div>
 
-        <div class="types-wrapper"
+        <div class="filter-types"
             v-if="selectedSuperType === 'Pokémon'"
             @change="$emit('changeType', selectedTypes.join(' '))"
         >
@@ -66,11 +66,25 @@
                 </label>
             </div>
         </div>
+        
+        <div class="filter-hp"
+        v-if="(selectedSuperType === 'Trainer' || selectedSuperType === 'Pokémon')"
+        >
+            <p>Min HP {{ sliderMin }}</p>
+            <p>Max HP {{ sliderMax }}</p>
+            <input 
+            @input="$emit('changeHp', `hp:[${sliderMin} TO ${sliderMax}]`)"
+            class="filter-min" type="range" :min="minHP" :max="maxHP" step="10" v-model="sliderMin"> 
+            <input 
+            @input="$emit('changeHp', `hp:[${sliderMin} TO ${sliderMax}]`)"
+            class="filter-max" type="range" :min="minHP" :max="maxHP" step="10" v-model="sliderMax"> 
+        </div>
+        
     </nav>
 </template>
 
 <script>
-    import { ref } from 'vue'
+    import { ref, watch } from 'vue'
     import myData from '../services/myData'
 
     export default {
@@ -79,7 +93,8 @@
             'changeSearchName', 
             'changeType',
             'changeSuperType',
-            'changeSubtype'
+            'changeSubtype',
+            'changeHp'
         ],
         setup(){
             const allTypes = myData.types
@@ -89,18 +104,44 @@
             const energySubtypes = myData.subtypes.energySubtypes
             const subtypes = ref(pokemonSubtypes)
 
+            const maxHP = ref(340)
+            const minHP = ref(0)
+
             const searchName = ref('')
             const selectedTypes = ref([])
             const selectedSubtype = ref('*')
             const selectedSuperType = ref('Pokémon')
+            const sliderMin = ref(minHP.value)
+            const sliderMax = ref(maxHP.value)
 
-            const changeSubtypeOptions = ()=>{
+            watch([sliderMax, sliderMin], (NewValue) => {
+                if (NewValue[1] >= sliderMax.value){
+                    if(NewValue[1] == maxHP.value || NewValue[1] == minHP.value){
+                        sliderMax.value = Number(NewValue[1])
+                    }else {
+                        sliderMax.value = Number(NewValue[1])
+                    }                  
+                }
+                if (NewValue[0] <= (sliderMin.value)) {
+                    if(NewValue[1] == maxHP.value || NewValue[1] == minHP.value){
+                        sliderMin.value = Number(NewValue[0])
+                    }else {
+                        sliderMin.value = Number(NewValue[0])
+                    }
+                } 
+            });
+
+            watch(selectedSuperType,()=>{
                 switch (selectedSuperType.value) {
                     case 'Pokémon':
                         subtypes.value = pokemonSubtypes
+                        sliderMax.value = maxHP.value = 340
+                        sliderMin.value = 0
                         break;
                     case 'Trainer':
                         subtypes.value = trainerSubtypes
+                        sliderMax.value = maxHP.value = 60 
+                        sliderMin.value = 0
                         break
                     case 'Energy':
                         subtypes.value = energySubtypes
@@ -108,8 +149,8 @@
                     default:
                         break;
                 }
-            }
-            
+            })
+
             return{
                 allTypes,
                 allSuperTypes,
@@ -118,7 +159,10 @@
                 selectedTypes,
                 selectedSubtype,
                 selectedSuperType,
-                changeSubtypeOptions
+                sliderMin,
+                sliderMax,
+                maxHP,
+                minHP
             }
         }
     }
@@ -128,7 +172,6 @@
     nav{
         box-sizing: border-box;
         max-width: 380px;
-        border: 1px dotted red;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -245,7 +288,7 @@
         filter: brightness(1.5);
         margin-right: 5px;
     }
-    .types-wrapper{
+    .filter-types{
         width: 100%;
         display: flex;
         flex-wrap: wrap;
@@ -269,6 +312,74 @@
         background-color: var(--color-first--variant);
         border-radius: 8px;
     }
+
+</style>
+
+<style scoped>
+    .filter-hp{
+        margin-top: 20px;
+        width: 100%;
+        position: relative;
+        display: flex;
+    }
+    .filter-hp p {
+        width: 100%;
+        color: var(--color-second);
+    }
+    .filter-hp p:nth-child(2){
+        text-align: end;
+        color: var(--color-third);
+    }
+    .filter-hp input{
+        -webkit-appearance: none;  
+        appearance: none;
+        width: 100%; 
+        height: 10px; 
+        background: #1c1c36; 
+        border-radius: 5px;
+        position: absolute;
+        pointer-events: none;
+        opacity: 1;
+        top: 20px;
+    }
+    .filter-hp input:focus{
+        outline: none;
+    }
+    .filter-hp .filter-min{
+        width: 92%;
+    }
+
+    .filter-hp .filter-max{
+        width: 92%;
+        right: 0;
+    }
+    .filter-hp input::-webkit-slider-thumb {
+        -webkit-appearance: none; 
+        appearance: none;
+        width: 15px; 
+        height: 15px; 
+        background: var(--color-third); 
+        filter: opacity(.7);
+        cursor: pointer;
+        border-radius: 50%;
+        -webkit-transition: .1s; 
+        transition: border .1s;
+        position: relative;
+        z-index: 1;
+        outline: 2px solid var(--color-first);
+        pointer-events: all;
+    }
+
+    .filter-hp .filter-min::-webkit-slider-thumb{
+        background-color: var(--color-second);
+    }
+
+    .filter-hp input::-webkit-slider-thumb:hover {
+        filter: opacity(1); 
+        scale: 1.1; 
+    }
+
+
 
 </style>
 

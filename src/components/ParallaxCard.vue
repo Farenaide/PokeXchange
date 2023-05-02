@@ -1,7 +1,7 @@
 <template>
     <div class="parallax-wrapper" @mousemove="mouseMove()" @mouseout="mouseOut()">
         <div ref="elementRef" class="parallax-card"> 
-            <img ref="holoEffect" class="card-effect" src="/HoloEffectJ.jpg" alt="effect">
+            <img ref="holoEffect" class="card-effect" src="/HoloEffect.jpg" alt="effect">
             <slot></slot>
         </div>
     </div>
@@ -71,8 +71,9 @@
         position: absolute;
         height: 500%;
         width: 500%;
-        mix-blend-mode: overlay;
+        mix-blend-mode: overlay; 
         object-fit: cover;
         opacity: 1;
+        pointer-events: none;
     }
 </style>
