@@ -1,6 +1,7 @@
 <template>
-    <div  class="parallax-wrapper" @mousemove="mouseMove()" @mouseout="mouseOut()">
-        <div ref="elementRef" class="parallax-card">
+    <div class="parallax-wrapper" @mousemove="mouseMove()" @mouseout="mouseOut()">
+        <div ref="elementRef" class="parallax-card"> 
+            <img ref="holoEffect" class="card-effect" src="/HoloEffectJ.jpg" alt="effect">
             <slot></slot>
         </div>
     </div>
@@ -10,35 +11,38 @@
     import { ref } from 'vue'
     import { useMouseInElement } from '@vueuse/core'
 
-export default {
-    name:'ParallaxCard',   
-    setup() {
-        const posX = ref(null)
-        const posY = ref(null)
-        const elementRef = ref(null)
-        const {elementX, elementY, elementHeight, elementWidth} = useMouseInElement(elementRef)
-        const mouseMove = () =>{           
-            const intensity = (elementHeight.value * elementWidth.value)/ 19000
-            posX.value = (elementX.value - (elementWidth.value / 2)) / intensity
-            posY.value = -(elementY.value - (elementHeight.value / 2)) / intensity
-            elementRef.value.setAttribute('style',`transform: rotateX(${posY.value}deg) rotateY(${posX.value}deg);`)
-        }
+    export default {
+        name:'ParallaxCard',   
+        setup() {
+            const posX = ref(null)
+            const posY = ref(null)
+            const elementRef = ref(null)
+            const holoEffect = ref(null)
+            const {elementX, elementY, elementHeight, elementWidth} = useMouseInElement(elementRef)
 
-        const mouseOut = ()=>{
-            setTimeout(() => {
+            const mouseMove = () =>{           
+                const intensity = (elementHeight.value * elementWidth.value)/ 19000
+                posX.value = (elementX.value - (elementWidth.value / 2)) / intensity
+                posY.value = -(elementY.value - (elementHeight.value / 2)) / intensity
+                elementRef.value.setAttribute('style',`transform: rotateX(${posY.value}deg) rotateY(${posX.value}deg);`)
+                holoEffect.value.setAttribute('style',`transform: translateX(${posX.value * 5}px) translateY(${posY.value * 5}px);`)
+            }
+
+            const mouseOut = ()=>{
                 elementRef.value.setAttribute('style',`transform: rotateX(0deg) rotateY(0deg);`)
-            }, 500);
-        }
+                holoEffect.value.setAttribute('style',`transform: translateX(0px) translateY(0px);`)
+            }
 
-        return {
-            elementRef,
-            posX,
-            posY,
-            mouseMove,
-            mouseOut,
-        }
-    },
-}
+            return {
+                elementRef,
+                holoEffect,
+                posX,
+                posY,
+                mouseMove,
+                mouseOut
+            }
+        },
+    }
 </script>
 
 <style>
@@ -53,14 +57,22 @@ export default {
     }
 
     .parallax-card{
-        width: 100%;
-        height: 100%;
         position: relative;
         transition: .3s ease-out;
         transform-style: preserve-3d;
         display: flex;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
+        border-radius: 10px;
     }
 
+    .card-effect{
+        position: absolute;
+        height: 500%;
+        width: 500%;
+        mix-blend-mode: overlay;
+        object-fit: cover;
+        opacity: 1;
+    }
 </style>
