@@ -7,6 +7,7 @@
                 @changeSuperType="handleSuperType"
                 @changeSubtype="handleSubtype"
                 @changeHp="handleHealthPoints"
+                @changeRarity="handleRarity"
             />
         </div>
         <div class="wrapper-itens">
@@ -19,7 +20,8 @@
                 :SelectedSuperType="selectedSuperType"
                 :SelectedSubtypes="selectedSubtype"
                 :SelectedHealthPoints="selectedHealthPoint"
-                :key="[selectedTypes, searchName, selectedSuperType, selectedSubtype, selectedHealthPoint]"
+                :SelectedRarity="selectedRarity"
+                :key="[selectedTypes, searchName, selectedSuperType, selectedSubtype, selectedHealthPoint, selectedRarity]"
             />
         </div>
     </div>
@@ -41,6 +43,7 @@
             const selectedSuperType = ref('Pokémon')
             const selectedSubtype = ref('*')
             const selectedHealthPoint = ref('')
+            const selectedRarity = ref('*')
 
             const handleName = (newName)=>{
                 searchName.value = newName
@@ -62,6 +65,10 @@
                 selectedHealthPoint.value = newHelthPoints
             }
 
+            const handleRarity = (newRarity)=>{
+                selectedRarity.value = newRarity
+            }
+
             const typeFilter = ref('')
             return {
                 searchName,
@@ -71,10 +78,12 @@
                 selectedSuperType,
                 selectedSubtype,
                 selectedHealthPoint,
+                selectedRarity,
                 handleType,
                 handleSuperType,
                 handleSubtype,
-                handleHealthPoints
+                handleHealthPoints,
+                handleRarity
             }
         },
     }
@@ -92,18 +101,18 @@
     .side-bar{
         flex-grow: 1;
         max-width: 280px;
-        height: 85vh;
+        max-height: 80vh;
+        border: 1px dotted red;
     }
     .wrapper-itens{
         flex-grow: 1;
         max-width: 1100px;
-        height: 85vh;
+        max-height: 80vh;
         margin: 0 auto;
         overflow-y: scroll;
+        border: 1px dotted red;
     }
     .market-itens{
-        max-width: 990px;
-        height: 1589px;
         margin-right: 0;
         margin-top: 20px;
     }

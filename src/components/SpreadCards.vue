@@ -42,7 +42,7 @@
                 params: {
                     pageSize: props.PageSize, 
                     page: props.PageNumber,
-                    q: `name:"${props.Name}*" subtypes:"${props.SelectedSubtypes}" ${props.SelectedTypes} supertype:"${props.SelectedSuperType}" ${props.SelectedHealthPoints}`,
+                    q: `name:"${props.Name}*" subtypes:"${props.SelectedSubtypes}" ${props.SelectedTypes} supertype:"${props.SelectedSuperType}" rarity:"${props.SelectedRarity}" ${props.SelectedHealthPoints}` ,
             }}).then((response) => {
                 createLoading(response.data.data.length)
                 response.data.data.map((card, index) => {
@@ -71,7 +71,8 @@
         SelectedTypes: {type: String, default:''},
         SelectedSuperType: {type: String, default:'*'},
         SelectedSubtypes: {type: String, default:'*'},
-        SelectedHealthPoints: {type: String, default: ''}
+        SelectedHealthPoints: {type: String, default: ''},
+        SelectedRarity: {type:String, default: '*'}
         
     }
 }
