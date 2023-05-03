@@ -102,7 +102,6 @@
         flex-grow: 1;
         max-width: 280px;
         max-height: 80vh;
-        border: 1px dotted red;
     }
     .wrapper-itens{
         flex-grow: 1;
@@ -110,7 +109,6 @@
         max-height: 80vh;
         margin: 0 auto;
         overflow-y: scroll;
-        border: 1px dotted red;
     }
     .market-itens{
         margin-right: 0;

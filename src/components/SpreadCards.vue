@@ -5,8 +5,8 @@
                 <img src="/pikachunotfound.png" alt="Card not found">
             </div>
             <li v-for="card in dataCards" :key="card.cardId">
-                <ParallaxCard>
-                    <img :src="card.cardImage" :alt="card.cardName">
+                <ParallaxCard  :reflexTypeProp="card.cardRarity">
+                    <img class="load" :src="card.cardImage" :alt="card.cardName">
                 </ParallaxCard>
             </li>
         </ul>
@@ -30,7 +30,8 @@
                     dataCards.value.push({
                         cardId: `${index}`, 
                         cardName: 'Default Card', 
-                        cardImage: '/loadingTCG.gif'
+                        cardImage: '/loadingTCG.gif',
+                        cardRarity: 'Common'
                     })
                 }
             }
@@ -49,13 +50,14 @@
                     dataCards.value.splice(index, 1, {
                         cardId: card.id, 
                         cardName: card.name, 
-                        cardImage: card.images[`${props.ImageSize}`]
+                        cardImage: card.images[`${props.ImageSize}`],
+                        cardRarity: card.rarity
                     })
                     dataCards.value.unshift(); 
                 });
             });
         })
-
+        
         return {
             dataCards,
         };
@@ -66,9 +68,9 @@
     props:{
         PageSize: {type: Number, default: 0},
         PageNumber: {type: Number, default: 0},
-        Name: {type: String, default:'*'},           
+        Name: {type: String, default:''},           
         ImageSize: {type: String, default:'small'},
-        SelectedTypes: {type: String, default:''},
+        SelectedTypes: {default:''},
         SelectedSuperType: {type: String, default:'*'},
         SelectedSubtypes: {type: String, default:'*'},
         SelectedHealthPoints: {type: String, default: ''},
@@ -84,16 +86,9 @@
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         column-gap: 10px;
         row-gap: 45px;
-        position: relative;
-        
+        position: relative;        
     }
-    li img{
-        height: 350px;
-    }
-    li{
-        display: block;
-        height: 350px;
-    }
+    
     .not-found{
         height: 500px;
         position: -webkit-sticky; /* Safari */
@@ -107,7 +102,8 @@
         grid-column: 1/4;
     }
 
-    .not-found img {
-        margin-top: 20px;
+    .load {
+        height: 350px;
+        object-fit: cover;
     }   
 </style>

@@ -40,7 +40,7 @@ const myData = {
             "Rare",
             "Rare Holo",            
             "Rare Ultra",
-            "Rare Secret",
+            "Rare Secret"
         ]
     },    
     subtypes: {

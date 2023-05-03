@@ -3,8 +3,8 @@
         <h3>Latest Cards</h3>
         <SpreadCards
         :PageSize="10"
-        :PageNumber="2"
-        :SelectedSubtypes="'MEGA'"
+        :PageNumber="1"
+        :SelectedRarity="'Rare Holo VMAX'"
         />
     </article>
 </template>
