@@ -3,20 +3,42 @@
         <h3>Latest Cards</h3>
         <SpreadCards
         :PageSize="10"
-        :PageNumber="1"
-        :SelectedRarity="'Rare Holo VMAX'"
+        :PageNumber="randomPage"
+        @max-pages="handleMaxPages"
+        :key="maxPages"
         />
     </article>
 </template>
 
 <script>
     import SpreadCards from './SpreadCards.vue';
+    import { ref } from 'vue'
 
     export default {
         name: "LatestCards",
-    components: {
-        SpreadCards
-    }
+        components: {
+            SpreadCards
+        },
+        setup(){
+        
+            const randomNumber = (min, max)=>{
+            return Math.random() * (max - min) + min;
+            }
+
+            const maxPages = ref(null)
+            const randomPage = ref(1)
+
+            const handleMaxPages = (NewValue)=>{
+                maxPages.value = NewValue.value
+                randomPage.value = Math.ceil(randomNumber(1, NewValue.value))
+            }
+
+            return{
+                maxPages,
+                handleMaxPages,
+                randomPage
+            }
+        }
 };
 </script>
 

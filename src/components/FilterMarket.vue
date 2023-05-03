@@ -31,7 +31,7 @@
                 v-model="selectedSuperType">
                 <label :for="supertype">
                     <div class="wrapper-border">
-                        <img :src="`/public/${supertype}Select.png`" :alt="supertype">
+                        <img :src="`/${supertype}Select.png`" :alt="supertype">
                         <div :class="`${supertype} select`"></div>
                         <div :class="`${supertype}2 select2`"></div>
                     </div>
@@ -81,7 +81,7 @@
                     v-model="selectedTypes"
                     />
                 <label :for="element" class="label-types">
-                    <img :src="`public/pokemonTypes/${element}.png`" :alt="element">
+                    <img :src="`/pokemonTypes/${element}.png`" :alt="element">
                     <p>{{ element }}</p>
                 </label>
             </div>

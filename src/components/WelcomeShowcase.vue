@@ -16,25 +16,47 @@
                 <p>Daily Trades</p>
             </div>
         </div>
+        <div class="three-cards">
+            <SpreadCards                    
+                    :PageNumber="randomPage"
+                    :PageSize="3"
+                    :SelectedRarity="'Rare Holo VMAX'"
+                    :ImageSize="'large'"
+                    @max-pages="handleMaxPages"
+                    :key="maxPages"
+            />
+        </div>
     </article>
 </template>
 
 <script>
     import { ref } from 'vue'
+    import SpreadCards from "@/components/SpreadCards.vue"
 
     export default{
     name: "WelcomeShowcase",
+    components:{
+        SpreadCards 
+    },
     setup(){
         const randomNumber = (min, max)=>{
             return Math.random() * (max - min) + min;
         }
-        const randomPage = ref(randomNumber(1, 35/3))
+
+        const maxPages = ref(null)
+        const randomPage = ref(1)
+
+        const handleMaxPages = (NewValue)=>{
+            maxPages.value = NewValue.value
+            randomPage.value = Math.ceil(randomNumber(1, NewValue.value))
+        }
 
         return{
-            randomPage
+            randomPage,
+            maxPages,
+            handleMaxPages 
         }
     }
-
 }
 </script>
 
@@ -56,9 +78,6 @@
         position: absolute;
         background-color: rgba(0, 255, 255, 0.527);
         
-    }
-    .threeCard{
-        display: flex;
     }
 
     h2{
@@ -102,4 +121,54 @@
         font-size: 15px;
         font-weight: 200;
     }    
+
+    .three-cards{
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        right: 150px;
+        display: flex;
+        align-items: center;
+        margin-top: -150px;
+
+    }
+    .three-cards ul{
+        position: absolute;
+        height: 100%;
+        width: 500px;
+    }
+
+    .three-cards ul :first-child{
+        margin: 50px;
+    }
+    .three-cards ul > :nth-child(1) {
+        position: absolute;
+        top: 0;
+        left: -55px;
+        z-index: 2;
+    }
+
+    .three-cards ul > :nth-child(2) {
+        position: absolute;
+        top: 10%;
+        left: 75px;
+        pointer-events: none;
+        rotate: 15deg;
+        z-index: 1;
+    }
+
+    .three-cards ul > :nth-child(3) {
+        position: absolute;
+        top: 12%;
+        left: 140px;
+        rotate: 30deg;
+        pointer-events: none;
+    }
+
+</style>
+
+<style>
+    .three-cards .load{
+        height: 400px;
+    }
 </style>

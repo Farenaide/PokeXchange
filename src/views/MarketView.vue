@@ -109,6 +109,7 @@
         max-height: 80vh;
         margin: 0 auto;
         overflow-y: scroll;
+        overflow-x: hidden;
     }
     .market-itens{
         margin-right: 0;
