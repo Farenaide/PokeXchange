@@ -18,46 +18,17 @@
         </div>
         <div class="three-cards">
             <SpreadCards                    
-                    :PageNumber="randomPage"
+                    :PageNumber="3"
                     :PageSize="3"
                     :SelectedRarity="'Rare Holo VMAX'"
                     :ImageSize="'large'"
-                    @max-pages="handleMaxPages"
-                    :key="maxPages"
             />
         </div>
     </article>
 </template>
 
-<script>
-    import { ref } from 'vue'
+<script setup>
     import SpreadCards from "@/components/SpreadCards.vue"
-
-    export default{
-    name: "WelcomeShowcase",
-    components:{
-        SpreadCards 
-    },
-    setup(){
-        const randomNumber = (min, max)=>{
-            return Math.random() * (max - min) + min;
-        }
-
-        const maxPages = ref(null)
-        const randomPage = ref(1)
-
-        const handleMaxPages = (NewValue)=>{
-            maxPages.value = NewValue.value
-            randomPage.value = Math.ceil(randomNumber(1, NewValue.value))
-        }
-
-        return{
-            randomPage,
-            maxPages,
-            handleMaxPages 
-        }
-    }
-}
 </script>
 
 <style scoped>

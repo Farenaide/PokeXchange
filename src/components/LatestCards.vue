@@ -3,43 +3,13 @@
         <h3>Latest Cards</h3>
         <SpreadCards
         :PageSize="10"
-        :PageNumber="randomPage"
-        @max-pages="handleMaxPages"
-        :key="maxPages"
+        :PageNumber="1"
         />
     </article>
 </template>
 
-<script>
+<script setup>
     import SpreadCards from './SpreadCards.vue';
-    import { ref } from 'vue'
-
-    export default {
-        name: "LatestCards",
-        components: {
-            SpreadCards
-        },
-        setup(){
-        
-            const randomNumber = (min, max)=>{
-            return Math.random() * (max - min) + min;
-            }
-
-            const maxPages = ref(null)
-            const randomPage = ref(1)
-
-            const handleMaxPages = (NewValue)=>{
-                maxPages.value = NewValue.value
-                randomPage.value = Math.ceil(randomNumber(1, NewValue.value))
-            }
-
-            return{
-                maxPages,
-                handleMaxPages,
-                randomPage
-            }
-        }
-};
 </script>
 
 <style scoped>

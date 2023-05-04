@@ -12,28 +12,26 @@
         </ul>
 </template>
 
-<script>
+<script setup>
     import apiTCG from '@/services/apiTCG.js'
     import ParallaxCard from './ParallaxCard.vue';
-    import { ref, onMounted, defineEmits } from 'vue'
+    import { ref, onMounted } from 'vue'
 
-    export default {
-    name: "SpreadCards",
-    components: {
-        ParallaxCard,
-    },
-    props: {
-        PageSize: { type: Number, default: 0 },
-        PageNumber: { type: Number, default: 0 },
-        Name: { type: String, default: '' },
-        ImageSize: { type: String, default: 'small' },
-        SelectedTypes: { default: '' },
-        SelectedSuperType: { type: String, default: '*' },
-        SelectedSubtypes: { type: String, default: '*' },
-        SelectedHealthPoints: { type: String, default: '' },
-        SelectedRarity: { type: String, default: '*' }
-    },
-    setup(props, { emit }) {
+        const props = defineProps({
+            PageSize: { type: Number, default: 0 },
+            PageNumber: { type: Number, default: 0 },
+            Name: { type: String, default: '' },
+            ImageSize: { type: String, default: 'small' },
+            SelectedTypes: { default: '' },
+            SelectedSuperType: { type: String, default: '*' },
+            SelectedSubtypes: { type: String, default: '*' },
+            SelectedHealthPoints: { type: String, default: '' },
+            SelectedRarity: { type: String, default: '*' }
+        })
+
+        const emit = defineEmits([
+            'max-pages',
+        ])
 
         const dataCards = ref([]);
 
@@ -57,8 +55,6 @@
             emit('max-pages', maxPages);
         }
 
-        defineEmits(['max-pages']);
-
         onMounted(() => {
         apiTCG.get('/cards', {
             params: {
@@ -67,7 +63,7 @@
             q: `name:"${props.Name}*" subtypes:"${props.SelectedSubtypes}" ${props.SelectedTypes} supertype:"${props.SelectedSuperType}" rarity:"${props.SelectedRarity}" ${props.SelectedHealthPoints}`,
             }
         }).then((response) => {
-            maxPages.value = Math.ceil((response.data.totalCount / response.data.pageSize))
+            maxPages.value = response.data.totalCount
             emitMaxPages()
             createLoading(response.data.data.length)
             response.data.data.map((card, index) => {
@@ -83,12 +79,6 @@
 
         })
 
-        return {
-            dataCards,
-            maxPages
-        };
-    }
-    }
 </script>
 
 

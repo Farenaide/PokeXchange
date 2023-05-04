@@ -22,7 +22,7 @@
             $emit('changeRarity', selectedRarity = '*')
             ]"
         >
-            <div v-for="supertype in allSuperTypes" :key="supertype">
+            <div v-for="supertype in pokemonSuperTypes" :key="supertype">
                 <input class="search-supertype-input"
                 type="radio" 
                 name="superTypes" 
@@ -71,7 +71,7 @@
         v-if="selectedSuperType === 'Pokémon'"
         @change="$emit('changeType', selectedTypes.join(' '))">
             <div class="input-wrapper"
-            v-for="element in allTypes" :key="element"> 
+            v-for="element in pokemonTypes" :key="element"> 
                 <input   
                     :class="`filter-${element}`"
                     :id="element"                 
@@ -101,101 +101,73 @@
     </nav>
 </template>
 
-<script>
+<script setup>
     import { ref, watch } from 'vue'
     import myData from '../services/myData'
 
-    export default {
-        name: 'FilterMarket',        
-        emits: [
-            'changeSearchName', 
-            'changeType',
-            'changeSuperType',
-            'changeSubtype',
-            'changeHp',
-            'changeRarity'
-        ],
-        setup(){
-            const allTypes = myData.types
-            const allSuperTypes = myData.supertypes
-            const trainerSubtypes = myData.subtypes.trainerSubtypes
-            const pokemonSubtypes = myData.subtypes.pokemonSubtypes
-            const trainerRarities = myData.rarity.trainerRarities
-            const energyRarities = myData.rarity.energyRarities
-            const pokemonRarities = myData.rarity.pokemonRarities
-            const energySubtypes = myData.subtypes.energySubtypes
-            const subtypes = ref(pokemonSubtypes)
-            const rarities = ref(pokemonRarities)
+    const pokemonTypes = myData.types
+    const pokemonSuperTypes = myData.supertypes
+    const trainerSubtypes = myData.subtypes.trainerSubtypes
+    const pokemonSubtypes = myData.subtypes.pokemonSubtypes
+    const trainerRarities = myData.rarity.trainerRarities
+    const energyRarities = myData.rarity.energyRarities
+    const pokemonRarities = myData.rarity.pokemonRarities
+    const energySubtypes = myData.subtypes.energySubtypes
+    const subtypes = ref(pokemonSubtypes)
+    const rarities = ref(pokemonRarities)
 
 
-            const maxHP = ref(340)
-            const minHP = ref(0)
+    const maxHP = ref(340)
+    const minHP = ref(0)
 
-            const searchName = ref('')
-            const selectedTypes = ref([])
-            const selectedSubtype = ref('*')
-            const selectedSuperType = ref('Pokémon')
-            const selectedRarity = ref('*')
-            const sliderMin = ref(minHP.value)
-            const sliderMax = ref(maxHP.value)
+    const searchName = ref('')
+    const selectedTypes = ref([])
+    const selectedSubtype = ref('*')
+    const selectedSuperType = ref('Pokémon')
+    const selectedRarity = ref('*')
+    const sliderMin = ref(minHP.value)
+    const sliderMax = ref(maxHP.value)
 
-            watch([sliderMax, sliderMin], (NewValue) => {
-                if (NewValue[1] >= sliderMax.value){
-                    if(NewValue[1] == maxHP.value || NewValue[1] == minHP.value){
-                        sliderMax.value = Number(NewValue[1])
-                    }else {
-                        sliderMax.value = Number(NewValue[1])
-                    }                  
-                }
-                if (NewValue[0] <= (sliderMin.value)) {
-                    if(NewValue[1] == maxHP.value || NewValue[1] == minHP.value){
-                        sliderMin.value = Number(NewValue[0])
-                    }else {
-                        sliderMin.value = Number(NewValue[0])
-                    }
-                } 
-            });
-
-            watch(selectedSuperType,()=>{
-                switch (selectedSuperType.value) {
-                    case 'Pokémon':
-                        subtypes.value = pokemonSubtypes
-                        rarities.value = pokemonRarities
-                        sliderMax.value = maxHP.value = 340
-                        sliderMin.value = 0
-                        break;
-                    case 'Trainer':
-                        rarities.value = trainerRarities
-                        subtypes.value = trainerSubtypes
-                        sliderMax.value = maxHP.value = 60 
-                        sliderMin.value = 0
-                        break
-                    case 'Energy':
-                        rarities.value = energyRarities
-                        subtypes.value = energySubtypes
-                        break
-                    default:
-                        break;
-                }
-            })
-
-            return{
-                allTypes,
-                allSuperTypes,
-                subtypes,
-                searchName,
-                selectedTypes,
-                selectedSubtype,
-                selectedSuperType,
-                selectedRarity,
-                sliderMin,
-                sliderMax,
-                maxHP,
-                minHP,
-                rarities
-            }
+    watch([sliderMax, sliderMin], (NewValue) => {
+        if (NewValue[1] >= sliderMax.value){
+            if(NewValue[1] == maxHP.value || NewValue[1] == minHP.value){
+                sliderMax.value = Number(NewValue[1])
+            }else {
+                sliderMax.value = Number(NewValue[1])
+            }                  
         }
-    }
+        if (NewValue[0] <= (sliderMin.value)) {
+            if(NewValue[1] == maxHP.value || NewValue[1] == minHP.value){
+                sliderMin.value = Number(NewValue[0])
+            }else {
+                sliderMin.value = Number(NewValue[0])
+            }
+        } 
+    });
+
+    watch(selectedSuperType,()=>{
+        switch (selectedSuperType.value) {
+            case 'Pokémon':
+                subtypes.value = pokemonSubtypes
+                rarities.value = pokemonRarities
+                sliderMax.value = maxHP.value = 340
+                sliderMin.value = 0
+                break;
+            case 'Trainer':
+                rarities.value = trainerRarities
+                subtypes.value = trainerSubtypes
+                sliderMax.value = maxHP.value = 60 
+                sliderMin.value = 0
+                break
+            case 'Energy':
+                rarities.value = energyRarities
+                subtypes.value = energySubtypes
+                break
+            default:
+                break;
+        }
+    })
+
 </script>
 
 <style scoped> /* NAV */
@@ -206,7 +178,7 @@
         flex-direction: column;
         align-items: center;
         padding: 20px 20px;
-        height: 85vh;
+        max-height: 80vh;
     }
 
 

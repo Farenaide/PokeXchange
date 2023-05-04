@@ -15,78 +15,69 @@
                 class="market-itens"
                 :Name="searchName"
                 :PageNumber="1"
-                :PageSize="24"
+                :PageSize="pageSize"
                 :SelectedTypes="selectedTypes"
                 :SelectedSuperType="selectedSuperType"
                 :SelectedSubtypes="selectedSubtype"
                 :SelectedHealthPoints="selectedHealthPoint"
                 :SelectedRarity="selectedRarity"
+                @max-pages="handleMaxPages"
                 :key="[selectedTypes, searchName, selectedSuperType, selectedSubtype, selectedHealthPoint, selectedRarity]"
             />
         </div>
     </div>
 </template>
 
-<script>
+<script setup>
     import FilterMarket from "@/components/FilterMarket.vue"
     import SpreadCards from "@/components/SpreadCards.vue"
-    import { ref } from 'vue'
+    import { ref, watch } from 'vue'
+
+    const searchName = ref('')
+    const selectedTypes = ref('')
+    const selectedSuperType = ref('Pokémon')
+    const selectedSubtype = ref('*')
+    const selectedHealthPoint = ref('')
+    const selectedRarity = ref('*')
+    const maxPages = ref()
+    const allCards = ref([])            
+    const pageSize = ref(24)
     
-    export default {
-        components: {
-            SpreadCards,
-            FilterMarket,
-        },
-        setup() {
-            const searchName = ref('')
-            const selectedTypes = ref('')
-            const selectedSuperType = ref('Pokémon')
-            const selectedSubtype = ref('*')
-            const selectedHealthPoint = ref('')
-            const selectedRarity = ref('*')
-
-            const handleName = (newName)=>{
-                searchName.value = newName
-            }
-
-            const handleType = (newType)=>{
-                selectedTypes.value = newType
-            }
-
-            const handleSuperType = (newSuperType)=>{
-                selectedSuperType.value = newSuperType
-            }
-
-            const handleSubtype = (newSubtype)=>{
-                selectedSubtype.value = newSubtype
-            }
-
-            const handleHealthPoints = (newHelthPoints)=>{
-                selectedHealthPoint.value = newHelthPoints
-            }
-
-            const handleRarity = (newRarity)=>{
-                selectedRarity.value = newRarity
-            }
-
-            const typeFilter = ref('')
-            return {
-                searchName,
-                typeFilter,
-                handleName,
-                selectedTypes,
-                selectedSuperType,
-                selectedSubtype,
-                selectedHealthPoint,
-                selectedRarity,
-                handleType,
-                handleSuperType,
-                handleSubtype,
-                handleHealthPoints,
-                handleRarity
-            }
-        },
+    const handleName = (newName)=>{
+        searchName.value = newName
     }
+
+    const handleType = (newType)=>{
+        selectedTypes.value = newType
+    }
+
+    const handleSuperType = (newSuperType)=>{
+        selectedSuperType.value = newSuperType
+    }
+
+    const handleSubtype = (newSubtype)=>{
+        selectedSubtype.value = newSubtype
+    }
+
+    const handleHealthPoints = (newHelthPoints)=>{
+        selectedHealthPoint.value = newHelthPoints
+    }
+
+    const handleRarity = (newRarity)=>{
+        selectedRarity.value = newRarity
+    }
+
+    const handleMaxPages = (NewValue)=>{
+        maxPages.value = NewValue.value
+    }
+
+    watch(maxPages, ()=>{
+        allCards.value=[]
+        for (let index = 0; index < maxPages.value; index++) {
+            allCards.value.push(index)
+        }
+    })
+
 </script>
 
 <style scoped>
@@ -115,4 +106,5 @@
         margin-right: 0;
         margin-top: 20px;
     }
+
 </style>

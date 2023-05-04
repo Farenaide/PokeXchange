@@ -3,3 +3,12 @@ body{
     background-color: var(--color-first);
     color: var(--color-white);
 }
+
+::-webkit-scrollbar {
+    width: 5px;               /* width of the entire scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-third);   
+    border-radius: 3px;
+}

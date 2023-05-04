@@ -16,12 +16,6 @@
     </header>
 </template>
 
-<script>
-    export default{
-        name:'NavBar'
-    }
-</script>
-
 <style scoped>
     nav{
         max-width: 1440px;

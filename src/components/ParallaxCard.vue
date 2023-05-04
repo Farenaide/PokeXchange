@@ -8,108 +8,92 @@
     </div>
 </template>
 
-<script>
-    import { ref, onMounted } from 'vue'
+<script setup>
+    import { ref, onMounted, defineProps } from 'vue'
     import { useMouseInElement } from '@vueuse/core'
 
-    export default {
-        name:'ParallaxCard',  
-        props:{
-            reflexTypeProp: {type:String, default:''}
-        },
-        setup(props) {
-            const posX = ref(null)
-            const posY = ref(null)
-            const elementRef = ref(null)
-            const reflexEffect = ref(null)
-            const {elementX, elementY, elementHeight, elementWidth} = useMouseInElement(elementRef)
-            const reflexType = ref('')
-            const coverEffect = ref('')
+    const props = defineProps({
+        reflexTypeProp: {type: String, default:''}
+    })
 
-            const basicEffect = [
-                'Common',
-                'Uncommon',
-                'Rare Holo EX',
-                'Rare Ultra',
-                'Rare Holo GX',
-                'Rare Holo LV.X',
-                'Rare Prime',
-                'Rare Holo V',
-                'Rare Shiny',
-                'Rare Shining',
-                'Amazing Rare',
-                'Rare Holo Star',
-                'LEGEND',
-                'Rare Holo',                
-            ] 
+    const posX = ref(null)
+    const posY = ref(null)
+    const elementRef = ref(null)
+    const reflexEffect = ref(null)
+    const {elementX, elementY, elementHeight, elementWidth} = useMouseInElement(elementRef)
+    const reflexType = ref('')
+    const coverEffect = ref('')
 
-            const effectTwo = [
-                'Rare Holo VMAX',
-                'Promo',
-                'Rare ACE',
-                'Rare Secret',
-            ]
+    const basicEffect = [
+        'Common',
+        'Uncommon',
+        'Rare Holo EX',
+        'Rare Ultra',
+        'Rare Holo GX',
+        'Rare Holo LV.X',
+        'Rare Prime',
+        'Rare Holo V',
+        'Rare Shiny',
+        'Rare Shining',
+        'Amazing Rare',
+        'Rare Holo Star',
+        'LEGEND',
+        'Rare Holo',                
+    ] 
 
-            const effectThree = [
-                'Rare BREAK',
-            ]
+    const effectTwo = [
+        'Rare Holo VMAX',
+        'Promo',
+        'Rare ACE',
+        'Rare Secret',
+    ]
 
-            const effectFour = [
-                'Rare Rainbow'
-            ]
+    const effectThree = [
+        'Rare BREAK',
+    ]
 
-            const mouseMove = () =>{           
-                const intensity = (elementHeight.value * elementWidth.value)/ 19000
-                posX.value = (elementX.value - (elementWidth.value / 2)) / intensity
-                posY.value = -(elementY.value - (elementHeight.value / 2)) / intensity
-                elementRef.value.setAttribute('style',`transform: rotateX(${posY.value}deg) rotateY(${posX.value}deg);`)
-                reflexEffect.value.setAttribute('style',`transform: translateX(${posX.value * 5}px) translateY(${posY.value * 5}px);`)
-            }
+    const effectFour = [
+        'Rare Rainbow'
+    ]
 
-            const mouseOut = ()=>{
-                elementRef.value.setAttribute('style',`transform: rotateX(0deg) rotateY(0deg);`)
-                reflexEffect.value.setAttribute('style',`transform: translateX(0px) translateY(0px);`)
-            }
-
-            onMounted(()=>{                
-                switch (true) {                    
-                    case basicEffect.includes(props.reflexTypeProp):
-                        reflexType.value = '/basicEffect.jpg' 
-                    break;
-
-                    case effectTwo.includes(props.reflexTypeProp):
-                        reflexType.value = '/effectTwo.jpg'
-                        coverEffect.value = '/particles1.gif'
-                    break;
-
-                    case effectThree.includes(props.reflexTypeProp):
-                        reflexType.value = '/effectThree.jpg'
-                    break;
-
-                    case effectFour.includes(props.reflexTypeProp):
-                        reflexType.value = '/effectFour.jpg'
-                    break;
-                
-                    default:
-                        reflexType.value = '/basicEffect.jpg'
-                        break;
-                }
-            })
-            
-
-
-            return {
-                elementRef,
-                reflexEffect,
-                reflexType,
-                coverEffect,
-                posX,
-                posY,
-                mouseMove,
-                mouseOut
-            }
-        },
+    const mouseMove = () =>{           
+        const intensity = (elementHeight.value * elementWidth.value)/ 19000
+        posX.value = (elementX.value - (elementWidth.value / 2)) / intensity
+        posY.value = -(elementY.value - (elementHeight.value / 2)) / intensity
+        elementRef.value.setAttribute('style',`transform: rotateX(${posY.value}deg) rotateY(${posX.value}deg);`)
+        reflexEffect.value.setAttribute('style',`transform: translateX(${posX.value * 5}px) translateY(${posY.value * 5}px);`)
     }
+
+    const mouseOut = ()=>{
+        elementRef.value.setAttribute('style',`transform: rotateX(0deg) rotateY(0deg);`)
+        reflexEffect.value.setAttribute('style',`transform: translateX(0px) translateY(0px);`)
+    }
+
+    onMounted(()=>{                
+        switch (true) {                    
+            case basicEffect.includes(props.reflexTypeProp):
+                reflexType.value = '/basicEffect.jpg' 
+            break;
+
+            case effectTwo.includes(props.reflexTypeProp):
+                reflexType.value = '/effectTwo.jpg'
+                coverEffect.value = '/particles1.gif'
+            break;
+
+            case effectThree.includes(props.reflexTypeProp):
+                reflexType.value = '/effectThree.jpg'
+            break;
+
+            case effectFour.includes(props.reflexTypeProp):
+                reflexType.value = '/effectFour.jpg'
+            break;
+        
+            default:
+                reflexType.value = '/basicEffect.jpg'
+                break;
+        }
+    })
+    
 </script>
 
 <style>
