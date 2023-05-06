@@ -1,82 +1,67 @@
 <template>
     <div class="wrapper-template">
         <div class="side-bar">
-            <FilterMarket
-                @changeSearchName="handleName"
-                @changeType="handleType"
-                @changeSuperType="handleSuperType"
-                @changeSubtype="handleSubtype"
-                @changeHp="handleHealthPoints"
-                @changeRarity="handleRarity"
+            <SearchByName v-model:selected-by-name="selectedName"/>
+
+            <SearchBySupertype v-model:selected-supertype="selectedSupertype" />
+
+            <SearchBySubtype v-model:selected-subtype="selectedSubtype" :selected-supertype="selectedSupertype"/>
+
+            <SearchByRarity v-model:selected-rarity="selectedRarity" :selected-supertype="selectedSupertype"/>
+            
+            <SearchByType 
+            v-model:selected-types="selectedTypes" 
+            :selected-supertype="selectedSupertype"
             />
+
+            <SearchByHealthPoints 
+            v-show="selectedSupertype !== 'Energy'"
+            v-model:health-points="selectedHealthPoints" 
+            :selected-supertype="selectedSupertype" />
+
         </div>
         <div class="wrapper-itens">
             <SpreadCards
                 class="market-itens"
-                :Name="searchName"
+                :Name="selectedName"
                 :PageNumber="1"
                 :PageSize="pageSize"
+                :SelectedHealthPoints="selectedHealthPoints"
                 :SelectedTypes="selectedTypes"
-                :SelectedSuperType="selectedSuperType"
+                :SelectedSuperType="selectedSupertype"
                 :SelectedSubtypes="selectedSubtype"
-                :SelectedHealthPoints="selectedHealthPoint"
                 :SelectedRarity="selectedRarity"
-                @max-pages="handleMaxPages"
-                :key="[selectedTypes, searchName, selectedSuperType, selectedSubtype, selectedHealthPoint, selectedRarity]"
+                :key="[
+                    selectedName,
+                    selectedHealthPoints,
+                    selectedTypes,
+                    selectedSupertype,
+                    selectedSubtype,
+                    selectedRarity
+                ]"
             />
         </div>
     </div>
 </template>
 
 <script setup>
-    import FilterMarket from "@/components/FilterMarket.vue"
     import SpreadCards from "@/components/SpreadCards.vue"
-    import { ref, watch } from 'vue'
+    import { ref } from 'vue'
+    import SearchByName from "../components/SearchByName.vue";
+    import SearchBySubtype from "../components/SearchBySubtype.vue"
+    import SearchBySupertype from "../components/SearchBySupertype.vue";
+    import SearchByRarity from "../components/SearchByRarity.vue";
+    import SearchByType from "../components/SearchByType.vue";
+    import SearchByHealthPoints from "../components/SearchByHealthPoints.vue";
 
-    const searchName = ref('')
-    const selectedTypes = ref('')
-    const selectedSuperType = ref('Pokémon')
+    const selectedName = ref('')
     const selectedSubtype = ref('*')
-    const selectedHealthPoint = ref('')
+    const selectedSupertype = ref('Pokémon')
     const selectedRarity = ref('*')
-    const maxPages = ref()
-    const allCards = ref([])            
+    const selectedTypes = ref([])    
+    const selectedHealthPoints = ref('')
+
     const pageSize = ref(24)
-    
-    const handleName = (newName)=>{
-        searchName.value = newName
-    }
-
-    const handleType = (newType)=>{
-        selectedTypes.value = newType
-    }
-
-    const handleSuperType = (newSuperType)=>{
-        selectedSuperType.value = newSuperType
-    }
-
-    const handleSubtype = (newSubtype)=>{
-        selectedSubtype.value = newSubtype
-    }
-
-    const handleHealthPoints = (newHelthPoints)=>{
-        selectedHealthPoint.value = newHelthPoints
-    }
-
-    const handleRarity = (newRarity)=>{
-        selectedRarity.value = newRarity
-    }
-
-    const handleMaxPages = (NewValue)=>{
-        maxPages.value = NewValue.value
-    }
-
-    watch(maxPages, ()=>{
-        allCards.value=[]
-        for (let index = 0; index < maxPages.value; index++) {
-            allCards.value.push(index)
-        }
-    })
 
 </script>
 
@@ -90,9 +75,13 @@
     }
 
     .side-bar{
-        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding-top: 20px;
         max-width: 280px;
         max-height: 80vh;
+        flex-grow: 1;
     }
     .wrapper-itens{
         flex-grow: 1;
