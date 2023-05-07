@@ -33,6 +33,7 @@
     const atualRarities = ref(pokemonRarities)
 
     watch(() => props.selectedSupertype,()=>{
+        console.log('teste');
         selectedRarity.value = '*'
         updateSelectedRarity()
         switch (props.selectedSupertype) {

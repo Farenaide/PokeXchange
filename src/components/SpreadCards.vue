@@ -17,67 +17,64 @@
     import ParallaxCard from './ParallaxCard.vue';
     import { ref, onMounted } from 'vue'
 
-        const props = defineProps({
-            PageSize: { type: Number, default: 0 },
-            PageNumber: { type: Number, default: 0 },
-            Name: { type: String, default: '' },
-            ImageSize: { type: String, default: 'small' },
-            SelectedTypes: { default: '' },
-            SelectedSuperType: { type: String, default: '*' },
-            SelectedSubtypes: { type: String, default: '*' },
-            SelectedHealthPoints: { type: String, default: '' },
-            SelectedRarity: { type: String, default: '*' }
-        })
+    const props = defineProps({
+        PageSize: { type: Number, default: 0 },
+        PageNumber: { type: Number, default: 0 },
+        Name: { type: String, default: '' },
+        ImageSize: { type: String, default: 'small' },
+        SelectedTypes: { default: '' },
+        SelectedSuperType: { type: String, default: '*' },
+        SelectedSubtypes: { type: String, default: '*' },
+        SelectedHealthPoints: { type: String, default: '' },
+        SelectedRarity: { type: String, default: '*' }
+    })
 
-        const emit = defineEmits([
-            'max-pages',
-        ])
+    const emit = defineEmits([
+        'update:maxCards'
+    ])
 
-        const dataCards = ref([]);
+    const dataCards = ref([]);
+    const maxCards = ref(0)
 
-        const createLoading = (size) => {
-            dataCards.value = []
-            if (size > 0) {
-                for (let index = 0; index < size; index++) {
-                dataCards.value.push({
-                    cardId: `${index}`,
-                    cardName: 'Default Card',
-                    cardImage: '/loadingTCG.gif',
-                    cardRarity: 'Common'
-                })
-                }
-            }
-        }
-        createLoading(props.PageSize)
+    
 
-        const maxPages = ref('')
-        const emitMaxPages = () => {
-            emit('max-pages', maxPages);
-        }
-
-        onMounted(() => {
-        apiTCG.get('/cards', {
-            params: {
-            pageSize: props.PageSize,
-            page: props.PageNumber,
-            q: `name:"${props.Name}*" subtypes:"${props.SelectedSubtypes}" ${props.SelectedTypes} supertype:"${props.SelectedSuperType}" rarity:"${props.SelectedRarity}" ${props.SelectedHealthPoints}`,
-            }
-        }).then((response) => {
-            maxPages.value = response.data.totalCount
-            emitMaxPages()
-            createLoading(response.data.data.length)
-            response.data.data.map((card, index) => {
-            dataCards.value.splice(index, 1, {
-                cardId: card.id,
-                cardName: card.name,
-                cardImage: card.images[`${props.ImageSize}`],
-                cardRarity: card.rarity,
+    const createLoading = (size) => {
+        dataCards.value = []
+        if (size > 0) {
+            for (let index = 0; index < size; index++) {
+            dataCards.value.push({
+                cardId: `${index}`,
+                cardName: 'Default Card',
+                cardImage: '/loadingTCG.gif',
+                cardRarity: 'Common'
             })
-            dataCards.value.unshift();
-            });
-        });
+            }
+        }
+    }
+    createLoading(props.PageSize)
 
+    onMounted(() => {
+    apiTCG.get('/cards', {
+        params: {
+        pageSize: props.PageSize,
+        page: props.PageNumber,
+        q: `name:"${props.Name}*" subtypes:"${props.SelectedSubtypes}" ${props.SelectedTypes} supertype:"${props.SelectedSuperType}" rarity:"${props.SelectedRarity}" ${props.SelectedHealthPoints}`,
+        }
+    }).then((response) => {
+        createLoading(response.data.data.length)
+        response.data.data.map((card, index) => {
+        dataCards.value.splice(index, 1, {
+            cardId: card.id,
+            cardName: card.name,
+            cardImage: card.images[`${props.ImageSize}`],
+            cardRarity: card.rarity,
         })
+        dataCards.value.unshift();
+        });
+        maxCards.value = response.data.totalCount
+        emit('update:maxCards', maxCards.value)
+    });
+    })
 
 </script>
 
