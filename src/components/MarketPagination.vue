@@ -70,13 +70,17 @@
         currentPage.value = 1
     })
 
+    watch(() => props.setTotalPages, ()=>{
+        currentPage.value = 1
+    })
+
 </script>
 
 <style scoped>
     .pagination-wrapper{
         display: flex;
         align-items: center;
-        font-size: 20px;
+        font-size: 17px;
         gap: 10px;
         width: 225px;
     }
@@ -90,7 +94,7 @@
 
     .fa-play{
         color: var(--color-third);
-        font-size: 20px;
+        font-size: 17px;
     }
     
     .page-input{
@@ -99,9 +103,10 @@
         padding: 5px;
         color: var(--corlor-white);
         font-family: var(--font-Roboto);
-        font-size: 20px;
+        font-size: 17px;
         border: none;
-        border-bottom: 2px solid var(--color-third);
+        border: 1px solid var(--color-third);
+        border-radius: 10px;
         width: 40px;
         text-align: center;
     }

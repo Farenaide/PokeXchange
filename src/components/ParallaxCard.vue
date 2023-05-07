@@ -9,7 +9,7 @@
 </template>
 
 <script setup>
-    import { ref, onMounted, defineProps } from 'vue'
+    import { ref, onMounted } from 'vue'
     import { useMouseInElement } from '@vueuse/core'
 
     const props = defineProps({

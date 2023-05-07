@@ -12,7 +12,7 @@
                 v-model="selectedTypes"
                 />
             <label :for="element" class="label-types">
-                <img :src="`/public/pokemonTypes/${element}.png`" :alt="element">
+                <img :src="`/pokemonTypes/${element}.png`" :alt="element">
                 <p>{{ element }}</p>
             </label>
         </div>

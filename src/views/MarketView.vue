@@ -22,12 +22,6 @@
         </div>
 
         <div class="market-wrapper">
-            <div class="pagination-wrapper">
-                    <MarketPagination :set-total-pages="maxPages"
-                    v-model:current-page="currentPage"
-                    :selected-supertype="selectedSupertype"
-                    />
-            </div>
             <div class="wrapper-itens">
                 <SpreadCards
                     class="market-itens"
@@ -49,6 +43,13 @@
                         selectedRarity
                     ]"
                 />
+                <div class="pagination-wrapper">
+                    <MarketPagination 
+                    :set-total-pages="maxPages"
+                    v-model:current-page="currentPage"
+                    :selected-supertype="selectedSupertype"
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -74,7 +75,7 @@
     const currentPage = ref(1)
     const pageSize = ref(24)
     const maxCards = ref(0)
-    const maxPages = ref(0)
+    const maxPages = ref(557)
 
     watch(maxCards, (newValue)=>{
         maxPages.value = Math.ceil(newValue / pageSize.value)
@@ -103,23 +104,48 @@
     }
     .wrapper-itens{
         flex-grow: 1;
+        margin-left: 20px;
         max-height: 78vh;
         overflow-y: scroll;
         overflow-x: hidden;
+        position: relative;
+      /*   padding-top: 20px; */
+    }
+
+    .wrapper-itens::before{
+        content: '';
+        display: block;
+        position: sticky;
+        top: 0px;
+        width: 100%;
+        height: 30px;
+        background-image: linear-gradient(to top, transparent, var(--color-first));
+        z-index: 1;
+    }
+
+    .wrapper-itens::after{
+        content: '';
+        display: block;
+        position: sticky;
+        bottom: 0px;
+        width: 100%;
+        height: 30px;
+        background-image: linear-gradient(to bottom, transparent, var(--color-first));
+        z-index: 1;
     }
 
     .market-wrapper{
         display: flex;
         flex-grow: 1;
         position: relative;
-        margin-top: 20px;
+        margin-top: -10px; 
         width: 100%;
         align-items: center;
     }
 
     .pagination-wrapper{
-        position: absolute;
-        top: -20px;   
-        right: calc(50% - 50px);
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
     }
 </style>
