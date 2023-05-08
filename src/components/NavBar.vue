@@ -96,6 +96,7 @@
         transition: scale .1s linear;
         margin: 0 auto;
         margin-right: 28px;
+        mix-blend-mode: lighten;
     }
     .nav-button{
         box-sizing: border-box;

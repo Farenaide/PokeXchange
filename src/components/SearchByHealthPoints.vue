@@ -140,7 +140,9 @@
         display: flex;
         flex-direction: column;
         border: 2px solid var(--color-second);
+        background-color: var(--color-first--variant);
         border-radius: 10px;
+        mix-blend-mode: screen;
     }
 
     .checked{
@@ -159,7 +161,7 @@
         appearance: none;
         width: 92%; 
         height: 10px; 
-        background: #1c1c36; 
+        background: #302c3b; 
         border-radius: 5px;
         position: absolute;
         pointer-events: none;
@@ -207,11 +209,8 @@
         display: flex;
         align-items: center;
         color: var(--color-second);
-        position: absolute;
-        top: -14px;
-        left: 20px;
-        background-color: var(--color-first);
-        border-right: 4px solid var(--color-first);
+        padding: 10px;
+
     }
     .toggle-HP input{
         -webkit-appearance: none; 
@@ -225,6 +224,7 @@
     .toggle-HP label{
         cursor: pointer;
         font-weight: 700;
+        width: 100%;
     }
     .toggle-HP input:checked{
         border-color: var(--color-third);

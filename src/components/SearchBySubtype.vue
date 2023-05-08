@@ -62,6 +62,7 @@
         width: 100%;
         height: 40px;
         position: relative;
+        mix-blend-mode: screen;
     }
 
     .select-wrapper::after{

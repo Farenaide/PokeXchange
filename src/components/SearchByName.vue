@@ -36,6 +36,7 @@
             width: 100%;
             position: relative;
             border: 1px solid var(--color-white);
+            mix-blend-mode: screen;
         }
         .fa-solid{
             margin-right: 10px;
