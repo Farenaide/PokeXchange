@@ -21,9 +21,10 @@
 
         </div>
 
-        <div class="market-wrapper">
+        <div class="market-wrapper" >
             <div class="wrapper-itens">
                 <SpreadCards
+                    v-if="whenMounted"
                     class="market-itens"
                     v-model:maxCards="maxCards"
                     :Name="selectedName"
@@ -35,8 +36,8 @@
                     :SelectedSubtypes="selectedSubtype"
                     :SelectedRarity="selectedRarity"
                     :key="[
-                        selectedName,
                         selectedHealthPoints,
+                        selectedName,
                         selectedTypes,
                         selectedSupertype,
                         selectedSubtype,
@@ -56,7 +57,7 @@
 </template>
 
 <script setup>
-    import { ref, watch } from 'vue'
+    import { ref, watch, onMounted } from 'vue'
     import SpreadCards from "@/components/SpreadCards.vue"
     import SearchByName from "@/components/SearchByName.vue";
     import SearchBySubtype from "@/components/SearchBySubtype.vue"
@@ -75,12 +76,16 @@
     const currentPage = ref(1)
     const pageSize = ref(24)
     const maxCards = ref(0)
-    const maxPages = ref(557)
+    const maxPages = ref(0)
+    const whenMounted = ref(false)
 
     watch(maxCards, (newValue)=>{
         maxPages.value = Math.ceil(newValue / pageSize.value)
     })
     
+    onMounted(()=>{
+        whenMounted.value = true
+    })
 
 </script>
 

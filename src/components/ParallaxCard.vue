@@ -115,7 +115,8 @@
         align-items: center;
         justify-content: center;
         overflow: hidden;
-        border-radius: 10px;
+        border-radius: 15px;
+        box-shadow: 10px 10px 25px #03001ba2;
     }
 
     .card-effect{

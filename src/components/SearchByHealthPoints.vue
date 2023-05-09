@@ -40,7 +40,7 @@
     import { ref, watch } from 'vue'
 
     const maxHP = ref(340)
-    const minHP = ref(0)
+    const minHP = ref(30)
     const sliderMin = ref(minHP.value)
     const sliderMax = ref(maxHP.value)
     const isChecked = ref(false)
@@ -56,7 +56,6 @@
 
     const emit = defineEmits([ 
         'update:healthPoints',
-        'update:Testando'
     ])
 
     const updateHealthPoints = ()=>{
@@ -84,7 +83,7 @@
     watch(() => props.selectedSupertype,()=>{
         switch (props.selectedSupertype) {
             case 'Pokémon':
-                sliderMin.value = minHP.value = 0
+                sliderMin.value = minHP.value = 30
                 sliderMax.value = maxHP.value = 340
                 updateHealthPoints()
                 break;

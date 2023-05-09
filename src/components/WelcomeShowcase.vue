@@ -22,6 +22,7 @@
                     :PageSize="3"
                     :SelectedRarity="'Rare Holo VMAX'"
                     :ImageSize="'large'"
+                    :HavePrice="false"
             />
         </div>
     </article>
@@ -101,7 +102,6 @@
         display: flex;
         align-items: center;
         margin-top: -150px;
-
     }
     .three-cards ul{
         position: absolute;
@@ -112,6 +112,7 @@
     .three-cards ul :first-child{
         margin: 50px;
     }
+
     .three-cards ul > :nth-child(1) {
         position: absolute;
         top: 0;

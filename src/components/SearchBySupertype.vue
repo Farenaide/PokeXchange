@@ -26,12 +26,13 @@
         'update:selectedSupertype'
     ])
 
+    const allSupertypes = myData.supertypes
+    const selectedSupertype = ref('Pokémon')
+
     const updateSelectedSupertype=()=>{
         emit('update:selectedSupertype', selectedSupertype.value)
     }
 
-    const allSupertypes = myData.supertypes
-    const selectedSupertype = ref('Pokémon')
 </script>
 
 <style scoped> /* Supertype */

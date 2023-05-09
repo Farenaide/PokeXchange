@@ -74,6 +74,7 @@
         top: 25%;
         rotate: 90deg;
         pointer-events: none;
+        
     }
     .select-wrapper select {
         appearance: none;
