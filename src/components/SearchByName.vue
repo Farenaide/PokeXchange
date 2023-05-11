@@ -1,14 +1,16 @@
 <template>
     <label class="search-by-name" for="search-by-name">
             <i class="fa-solid fa-magnifying-glass"></i>
+            <KeepAlive>
             <input
             class="input"
             type="text" 
             id="search-by-name"
             placeholder="e.g. Pikachu"
             v-model="selectedByName"
-            @input="updateselectedByName"
+            @change="updateselectedByName"
             />
+            </KeepAlive>
     </label> 
 </template>
 

@@ -17,13 +17,33 @@
             </div>
         </div>
         <div class="three-cards">
-            <SpreadCards                    
-                    :PageNumber="3"
-                    :PageSize="3"
-                    :SelectedRarity="'Rare Holo VMAX'"
-                    :ImageSize="'large'"
-                    :HavePrice="false"
-            />
+            <div class="card1">
+                <SpreadCards
+                        :PageNumber="7"
+                        :PageSize="1"
+                        :SelectedRarity="'Rare Holo VMAX'"
+                        :ImageSize="'large'"
+                        :HavePrice="false"
+                />
+            </div>
+            <div class="card2">
+                <SpreadCards
+                        :PageNumber="12"
+                        :PageSize="1"
+                        :SelectedRarity="'Rare Holo VMAX'"
+                        :ImageSize="'large'"
+                        :HavePrice="false"
+                />
+            </div>
+            <div class="card3">
+                <SpreadCards
+                        :PageNumber="11"
+                        :PageSize="1"
+                        :SelectedRarity="'Rare Holo VMAX'"
+                        :ImageSize="'large'"
+                        :HavePrice="false"
+                />
+            </div>
         </div>
     </article>
 </template>
@@ -45,11 +65,6 @@
         position: relative;
         gap: 40px;
         padding: 0 20px;
-    }
-    picture{
-        position: absolute;
-        background-color: rgba(0, 255, 255, 0.527);
-        
     }
 
     h2{
@@ -95,52 +110,40 @@
     }    
 
     .three-cards{
-        position: absolute;
-        width: 500px;
-        height: 500px;
-        right: 150px;
-        display: flex;
-        align-items: center;
-        margin-top: -150px;
-    }
-    .three-cards ul{
-        position: absolute;
-        height: 100%;
-        width: 500px;
+        position: relative;
+        height: 350px;
+        margin-left: -100px;
+        margin-top: -140px;
     }
 
-    .three-cards ul :first-child{
-        margin: 50px;
-    }
-
-    .three-cards ul > :nth-child(1) {
+    .card1 {
+        width: 250px;
         position: absolute;
-        top: 0;
-        left: -55px;
         z-index: 2;
+        rotate: -20deg;
+        top: 20px;
     }
-
-    .three-cards ul > :nth-child(2) {
+    .card2{
         position: absolute;
-        top: 10%;
-        left: 75px;
-        pointer-events: none;
-        rotate: 15deg;
+        width: 250px;
         z-index: 1;
+        left: 100px;
     }
-
-    .three-cards ul > :nth-child(3) {
+    .card3{
+        top: 20px;
         position: absolute;
-        top: 12%;
-        left: 140px;
-        rotate: 30deg;
-        pointer-events: none;
+        width: 250px;
+        left: 200px;
+        rotate: 20deg;
     }
 
 </style>
 
 <style>
-    .three-cards .load{
-        height: 400px;
-    }
+.card1 .parallax-effect,
+.card2 .parallax-effect,
+.card3 .parallax-effect{
+    height: 450px;
+    width: 321px;
+}
 </style>

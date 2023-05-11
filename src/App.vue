@@ -25,14 +25,15 @@
 <style scoped>
 
 	.circle-wrapper{
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		width: 100%;
 		height: 100%;
+		min-height: 100vh;
 		overflow: hidden;
-		z-index: -1;
-		filter: opacity(.7);
+		z-index: -2;
+		filter: opacity(.5);
 		pointer-events: none;
 	}
 	.circle {
@@ -41,8 +42,22 @@
 		top: 50%;
 		left: 40%;
 		height: 100%;
-		filter: blur(300px);
+		filter: blur(150px);
 		z-index: -1;
+	}
+
+	.circle3 {
+		width: 600px;
+		height: 600px;
+		background-color: var(--color-second);
+		animation: rotate 30s linear infinite;
+	}
+
+	.circle4 {
+		width: 600px;
+		height: 600px;
+		background-color: var(--color-second);
+		animation: rotate 60s linear infinite;
 	}
 
 	.circle1 {
@@ -53,25 +68,13 @@
 	}
 
 	.circle2 {
-	width: 400px;
-	height: 400px;
-	background-color: var(--color-third);
-	animation: rotate 20s linear infinite;
+		width: 400px;
+		height: 400px;
+		background-color: var(--color-third);
+		animation: rotate 20s linear infinite;
 	}
 
-	.circle3 {
-	width: 600px;
-	height: 600px;
-	background-color: var(--color-second);
-	animation: rotate 30s linear infinite;
-	}
-
-	.circle4 {
-	width: 600px;
-	height: 600px;
-	background-color: var(--color-second);
-	animation: rotate 60s linear infinite;
-	}
+	
 
 	@keyframes rotate {
 	0% {

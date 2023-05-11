@@ -9,10 +9,14 @@
                     <p v-if="card.cardPrice"><i class="fa-brands fa-ethereum"></i> {{ card.cardPrice }}</p>
                     <p v-else><span class="skeleton-icon"><i class="fa-brands fa-ethereum"></i></span> <span class="skeleton-price">Loading...</span></p>
                 </div>
-                <ParallaxCard  :reflexTypeProp="card.cardRarity">
-                    <img class="load" :src="card.cardImage" :alt="card.cardName">
-                </ParallaxCard>
-
+                
+                <div class="parallax-effect">
+                    <ParallaxEffect
+                        :src-image="card.cardImage"
+                        :alt-image="card.cardName"
+                        :reflex-type-prop="card.cardRarity"
+                    />
+                </div>
             </li>
         </ul>
 </template>
@@ -20,7 +24,7 @@
 <script setup>
     import apiTCG from '@/services/apiTCG.js'
     import apiETH from '@/services/apiETH.js'
-    import ParallaxCard from './ParallaxCard.vue';
+    import ParallaxEffect from './ParallaxEffect.vue';
     import { ref, onMounted } from 'vue'
 
     const props = defineProps({
@@ -74,17 +78,11 @@
             }).then((response) => {
                 createLoading(response.data.data.length)
                 response.data.data.map((card, index) => {
-                    let cardPrice = 0
-                    if(Object.prototype.hasOwnProperty.call(card, 'tcgplayer')){
-                        if(Object.prototype.hasOwnProperty.call(card.tcgplayer, 'prices')){
-                            const cardTipKey = Object.keys(card.tcgplayer.prices)[0]
-                            console.log(`${card.name} -> ${Number(card.tcgplayer.prices[`${cardTipKey}`].market)}`);
-                            cardPrice = (Number(card.tcgplayer.prices[`${cardTipKey}`].market) / EURtoETH.value).toFixed(5)
-                        }   else{
+                    let cardPrice = 0 
+                    if(Object.prototype.hasOwnProperty.call(card, 'cardmarket')){
+                            cardPrice = (card.cardmarket.prices.trendPrice / EURtoETH.value).toFixed(6)
+                    }else {
                             cardPrice = 'SOLD OUT'
-                        }
-                    } else{
-                        cardPrice = 'SOLD OUT'
                     }
                     dataCards.value.splice(index, 1, {
                         cardId: card.id,
@@ -99,12 +97,13 @@
                 emit('update:maxCards', maxCards.value)
             });
         })
+
     })
 
 </script>
 
 
-<style>
+<style scoped>
     ul{
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -115,6 +114,18 @@
 
     li{
         position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .parallax-effect{
+        width: 250px;
+        height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .not-found{
@@ -130,11 +141,6 @@
         grid-column: 1/4;
     }
 
-    .load {
-        height: 350px;
-        object-fit: cover;
-    }   
-
     .card-price{
         box-sizing: border-box;
         z-index: 1;
@@ -145,7 +151,7 @@
         border: 1px solid #fff;
         backdrop-filter: blur(10px);
         margin: 0 auto;
-        width: 250px;
+        width: 230px;
         padding: 5px;
         border-radius: 15px;
         margin-bottom: 5px;
@@ -183,7 +189,7 @@
         }
     }
 
-    p{
+    .card-price p{
         display: flex;
         align-items: center;
         justify-content: center;

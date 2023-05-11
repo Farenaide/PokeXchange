@@ -1,6 +1,13 @@
 <template>
     <div class="wrapper-template">
+        <!-- <div class="wrapper-informations">
+            <ParallaxCard :hasReflect="false" :move-intensity="6">
+                    <CardInformations/>
+            </ParallaxCard>
+        </div> -->
+
         <div class="side-bar">
+            
             <SearchByName v-model:selected-by-name="selectedName" :selected-supertype="selectedSupertype"/>
 
             <SearchBySupertype v-model:selected-supertype="selectedSupertype" />
@@ -20,7 +27,7 @@
             :selected-supertype="selectedSupertype" />
 
         </div>
-
+        
         <div class="market-wrapper" >
             <div class="wrapper-itens">
                 <SpreadCards
@@ -66,6 +73,8 @@
     import SearchByType from "@/components/SearchByType.vue";
     import SearchByHealthPoints from "@/components/SearchByHealthPoints.vue";
     import MarketPagination from "@/components/MarketPagination.vue";
+/*     import CardInformations from '../components/CardInformations.vue';
+    import ParallaxCard from '../components/ParallaxCard.vue'; */
 
     const selectedName = ref('')
     const selectedSubtype = ref('*')
@@ -92,24 +101,26 @@
 <style scoped>
     .wrapper-template{
         box-sizing: border-box;
-        display: flex;
+        display: grid;
+        grid-template-columns: 1fr 4fr;
         max-width: 1440px;
         margin: 50px auto 0;
         padding: 20px;
+        position: relative;
     }
 
     .side-bar{
+        position: sticky;
+        top: 100px;
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 30px;
         max-width: 280px;
-        max-height: 100%;
-        flex-grow: 1;
+        max-height: 633px;
     }
     .wrapper-itens{
         flex-grow: 1;
         margin-left: 20px;
-        max-height: 78vh;
         overflow-y: scroll;
         overflow-x: hidden;
         position: relative;
@@ -130,4 +141,12 @@
         margin-left: auto;
         margin-right: auto;
     }
+    .wrapper-informations{
+        position: fixed;
+        z-index: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    } 
+
 </style>
