@@ -140,6 +140,13 @@
 </style>
 
 <style>
+.card1 .parallax-effect img,
+.card2 .parallax-effect img,
+.card3 .parallax-effect img{
+    height: 430px;
+    width: 300px;
+}
+
 .card1 .parallax-effect,
 .card2 .parallax-effect,
 .card3 .parallax-effect{

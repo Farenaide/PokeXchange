@@ -4,18 +4,20 @@
                 <h3>No cards matches your filter</h3>
                 <img src="/pikachunotfound.png" alt="Card not found">
             </div>
-            <li v-for="card in dataCards" :key="card.cardId">
+            <li v-for="card in dataCards" :key="card.cardId" :id="card.cardId">
                 <div v-if="HavePrice" :class="['card-price', {'sold-out' : card.cardPrice==='SOLD OUT'}]">
-                    <p v-if="card.cardPrice"><i class="fa-brands fa-ethereum"></i> {{ card.cardPrice }}</p>
-                    <p v-else><span class="skeleton-icon"><i class="fa-brands fa-ethereum"></i></span> <span class="skeleton-price">Loading...</span></p>
+                    <p v-if="card.cardPrice">
+                        <i class="fa-brands fa-ethereum"></i> {{ card.cardPrice }}
+                    </p>
+                    <p v-else><span class="skeleton-icon">
+                        <i class="fa-brands fa-ethereum"></i></span> <span class="skeleton-price">Loading...</span>
+                    </p>
                 </div>
                 
                 <div class="parallax-effect">
-                    <ParallaxEffect
-                        :src-image="card.cardImage"
-                        :alt-image="card.cardName"
-                        :reflex-type-prop="card.cardRarity"
-                    />
+                    <ParallaxEffect :reflex-type-prop="card.cardRarity">
+                        <img :src="card.cardImage" :alt="card.cardName" :id="card.cardId">
+                    </ParallaxEffect>
                 </div>
             </li>
         </ul>
@@ -121,8 +123,8 @@
     }
 
     .parallax-effect{
-        width: 250px;
-        height: 350px;
+        width: 270px;
+        height: 370px; 
         display: flex;
         align-items: center;
         justify-content: center;

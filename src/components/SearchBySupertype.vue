@@ -9,7 +9,7 @@
             v-model="selectedSupertype">
             <label :for="supertype">
                 <div class="wrapper-border">
-                    <img :src="`/${supertype}Select.png`" :alt="supertype">
+                    <img :src="getImage(supertype)" :alt="supertype">
                     <div :class="`${supertype} select`"></div>
                     <div :class="`${supertype}2 select2`"></div>
                 </div>
@@ -19,6 +19,7 @@
 </template>
 
 <script setup>
+
     import { ref } from 'vue'
     import myData from '../services/myData';
 
@@ -28,6 +29,10 @@
 
     const allSupertypes = myData.supertypes
     const selectedSupertype = ref('Pokémon')
+
+    const getImage = (imageName)=>{
+        return `/${imageName}Select.png`
+    }
 
     const updateSelectedSupertype=()=>{
         emit('update:selectedSupertype', selectedSupertype.value)

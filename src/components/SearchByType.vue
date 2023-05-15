@@ -12,7 +12,7 @@
                 v-model="selectedTypes"
                 />
             <label :for="element" class="label-types">
-                <img :src="`/pokemonTypes/${element}.png`" :alt="element">
+                <img :src="getImage(element)" :alt="element">
                 <p>{{ element }}</p>
             </label>
         </div>
@@ -25,6 +25,10 @@
 
     const selectedTypes = ref([])
     const pokemonTypes = myData.types
+
+    const getImage = (imageName)=>{
+        return `/${imageName}.png`
+    }
 
     const props = defineProps({
         selectedSupertype: String

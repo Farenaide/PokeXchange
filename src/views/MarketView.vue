@@ -1,12 +1,13 @@
 <template>
     <div class="wrapper-template">
-        <!-- <div class="wrapper-informations">
-            <ParallaxCard :hasReflect="false" :move-intensity="6">
-                    <CardInformations/>
-            </ParallaxCard>
-        </div> -->
 
-        <div class="side-bar">
+        <div class="card-wrapper" v-show="cardModal" ref="cardWrapper">
+			<ParallaxEffect :reflex-type-prop="'noEffect'" :intensity-parallax="5">
+				<CardInformations :card-id="cardId" :key="cardId" /> 
+			</ParallaxEffect>
+		</div>
+
+        <div class="side-bar" @change="filterChangeKey = !filterChangeKey">
             
             <SearchByName v-model:selected-by-name="selectedName" :selected-supertype="selectedSupertype"/>
 
@@ -30,7 +31,9 @@
         
         <div class="market-wrapper" >
             <div class="wrapper-itens">
-                <SpreadCards
+                <SpreadCards   
+                    ref="target"  
+                    @click="cardClick"               
                     v-if="whenMounted"
                     class="market-itens"
                     v-model:maxCards="maxCards"
@@ -42,17 +45,10 @@
                     :SelectedSuperType="selectedSupertype"
                     :SelectedSubtypes="selectedSubtype"
                     :SelectedRarity="selectedRarity"
-                    :key="[
-                        selectedHealthPoints,
-                        selectedName,
-                        selectedTypes,
-                        selectedSupertype,
-                        selectedSubtype,
-                        selectedRarity
-                    ]"
+                    :key="filterChangeKey"
                 />
                 <div class="pagination-wrapper">
-                    <MarketPagination 
+                    <MarketPagination                     
                     :set-total-pages="maxPages"
                     v-model:current-page="currentPage"
                     :selected-supertype="selectedSupertype"
@@ -65,6 +61,7 @@
 
 <script setup>
     import { ref, watch, onMounted } from 'vue'
+    import { onClickOutside } from '@vueuse/core'
     import SpreadCards from "@/components/SpreadCards.vue"
     import SearchByName from "@/components/SearchByName.vue";
     import SearchBySubtype from "@/components/SearchBySubtype.vue"
@@ -73,8 +70,8 @@
     import SearchByType from "@/components/SearchByType.vue";
     import SearchByHealthPoints from "@/components/SearchByHealthPoints.vue";
     import MarketPagination from "@/components/MarketPagination.vue";
-/*     import CardInformations from '../components/CardInformations.vue';
-    import ParallaxCard from '../components/ParallaxCard.vue'; */
+    import CardInformations from '../components/CardInformations.vue';
+    import ParallaxEffect from '../components/ParallaxEffect.vue'; 
 
     const selectedName = ref('')
     const selectedSubtype = ref('*')
@@ -87,6 +84,23 @@
     const maxCards = ref(0)
     const maxPages = ref(0)
     const whenMounted = ref(false)
+    const cardModal = ref(false)
+    const cardId = ref('pl1-1')
+    const filterChangeKey = ref(true)
+    const cardWrapper = ref(null)
+
+    const target = ref(null)
+
+    onClickOutside(target, (event) => {
+        if (!cardWrapper.value.contains(event.target)) {
+            cardModal.value = false
+        }
+    })
+
+    const cardClick = (event)=>{
+        cardModal.value = true
+        cardId.value = event.target.id            
+    }
 
     watch(maxCards, (newValue)=>{
         maxPages.value = Math.ceil(newValue / pageSize.value)
@@ -141,12 +155,19 @@
         margin-left: auto;
         margin-right: auto;
     }
-    .wrapper-informations{
+
+    .card-wrapper{
+        width: 800px;
+		height: 530px;
         position: fixed;
-        z-index: 1;
-        top: 50%;
+		top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-    } 
+        transform: translate(-35%, -50%);
+        z-index: 2;
+	}
+
+    .market-itens{
+        cursor: pointer;
+    }
 
 </style>

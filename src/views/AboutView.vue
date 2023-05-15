@@ -1,22 +1,23 @@
 <template>
-	<div>
-		<ParallaxEffect
-			:src-image="'https://images.pokemontcg.io/swsh3/20_hires.png'"
-			:alt-image="'Charizard'"
-			:reflex-type-prop="'Rare Holo VMAX'"
-		/>
-	</div>
+		<div class="card-wrapper">
+			<ParallaxEffect :reflex-type-prop="'noEffect'" :intensity-parallax="5">
+				<CardInformations/> 
+			</ParallaxEffect>
+		</div>
 </template>
 
 <script setup>
+	import CardInformations from '../components/CardInformations.vue'; 
 	import ParallaxEffect from '../components/ParallaxEffect.vue';
 
 </script>
 
 <style scoped>
-	div{
-		width: 250px;
-		height: 350px;
-		margin: auto;
+
+	.card-wrapper{
+		max-width: 800px;
+		height: 510px;
+		border: 1px dotted red;
+		
 	}
 </style>

@@ -2,8 +2,13 @@
     <div ref="target" class="target-style" @mouseleave="mouseLeave">
         <div class="container-style">
             <div ref="card" :style="cardStyle" class="card-style">
-                <img class="layer-base" :src="props.srcImage" :alt="props.altImage">
 
+                <div class="layer-base">
+                    <slot>
+                        
+                    </slot>
+                </div>
+                
                 <img
                 v-if="reflexType"
                 :style="layer1" 
@@ -32,8 +37,9 @@
     const props = defineProps({
         srcImage: {type: String, default:'/loadingTCG.gif'},
         altImage: {type: String, default:'Loading Card'},
-        srcEffect: {type: String, default:'/basicEffect.jpg'},
-        reflexTypeProp: {type: String, default:'Common'},
+        srcEffect: {type: String, default:''},
+        reflexTypeProp: {type: String, default:''},
+        intensityParallax: {type: Number, default:40}
     })
 
     const target = ref(null)
@@ -43,9 +49,11 @@
     const particles = ref(null)
 
     const cardStyle = computed(() => ({
-        transform: `rotateX(${parallax.roll * 40}deg) rotateY(${parallax.tilt * 40}deg)`,
+        transform: `
+        rotateX(${parallax.roll * props.intensityParallax}deg) 
+        rotateY(${parallax.tilt * props.intensityParallax}deg)
+        `,
     }))
-
     const layer1 = computed(() => ({
         transform: `translateX(${parallax.tilt * 120}px) translateY(${parallax.roll * 220}px) scale(5)`,
     }))
@@ -56,8 +64,14 @@
 
     const mouseLeave = ()=>{
         setTimeout(() => {
-            card.value.style.transform =  `rotateX(0deg) rotateY(0deg)`
+            try {
+                card.value.style.transform =  'rotateX(0deg) rotateY(0deg)'
+            } catch (error) {
+                console.log('Card has been dissolved');
+            }
         }, 500);
+        
+        
     }
 
     onMounted(()=>{
@@ -68,7 +82,6 @@
         switch (true) {                    
             case basicEffect.includes(props.reflexTypeProp):
                 reflexType.value = '/basicEffect.jpg' 
-                
             break;
 
             case effectTwo.includes(props.reflexTypeProp):
@@ -82,6 +95,10 @@
 
             case effectFour.includes(props.reflexTypeProp):
                 reflexType.value = '/effectFour.jpg'
+            break;
+
+            case noEffect.includes(props.reflexTypeProp):
+                reflexType.value = ''
             break;
         
             default:
@@ -122,6 +139,10 @@
         'Rare Rainbow'
     ]
 
+    const noEffect = [
+        'noEffect'
+    ]
+
 </script>
 
 
@@ -134,10 +155,7 @@
         width: 100%;
         height: 100%;
         margin: auto;
-        user-select: none;
-        cursor: pointer;
         padding: 10px;
-
     }
     .container-style{
         perspective: 500px;
@@ -151,17 +169,19 @@
         border-radius: 15px;
         transition: .45s cubic-bezier(.2,.49,.32,.99);
         overflow: hidden;
-        user-select: none;
-        background-color: black;
         box-shadow: 5px 5px 30px rgba(10, 14, 32, 0.781);
+        user-select: none;
     }
     .layer-base{
         position: absolute;
         width: 100%;
-        height: 100%;
+        height: 100%; 
         border-radius: 10px;
     }
+
     .layer1{
+        width: 100%;
+        height: 100%;
         mix-blend-mode: overlay;
         object-fit: cover;
         pointer-events: none;
@@ -172,5 +192,14 @@
         object-fit: cover;
         mix-blend-mode: screen;
         pointer-events: none; 
+    } 
+</style>
+
+<style>
+    .layer-base > img{
+        position: absolute;
+        width: 250px;
+        height: 350px;
+        border-radius: 10px;
     } 
 </style>
